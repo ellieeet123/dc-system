@@ -1,0 +1,1 @@
+{"name":"asdfghjkl","judges":["one_hundred_pigs","ellio"],"taste":12,"present":13,"labor":14,"creativity":15,"total":54,"num_entries":2,"entries":[["ok","asd"],["ggggg","dfghdifughiurg6"]]}

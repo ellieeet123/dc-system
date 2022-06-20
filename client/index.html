@@ -1,0 +1,152 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="client/font.css">
+        <link rel="stylesheet" href="client/index.css">
+    </head>
+    <body>
+        <div class="cover" id="cover_pw">
+            <div class="popup">
+                <p id="gpw_msg">enter global access password:</p>
+                <div class="controls">
+                    <input type="password" id="pw">
+                    <button id="pw_btn">enter</button>
+                </div>
+                <p id="response"></p>
+            </div>
+        </div>
+        <div class="cover" id="cover_newacc">
+            <div id="newacc" class="popup">
+                <p>create account</p>
+                <p>username should be between 2 and 20 characters, 
+                 with only lowercase letters, numbers and underscores.</p>
+                <div style="text-align: center">
+                    <span>username: </span>
+                    <br>
+                    <input type="text" id="newacc_username">
+                    <br>
+                    <span>password: </span>
+                    <br>
+                    <input type="password" id="newacc_pw1">
+                    <br>
+                    <span>re-enter: </span>
+                    <br>
+                    <input type="password" id="newacc_pw2">
+                    <br>
+                    <button id="newacc_cancel">cancel</button>
+                    <button id="newacc_create">create</button>
+                    <p id="newacc_response"></p>
+                </div>
+            </div>
+        </div>
+        <div class="cover" id="cover_signin">
+            <div id="signin" class="popup">
+                <p>sign in</p>
+                <div style="text-align: center">
+                    <span>username: </span>
+                    <br>
+                    <input type="text" id="signin_username">
+                    <br>
+                    <span>password: </span>
+                    <br>
+                    <input type="password" id="signin_pw">
+                    <br>
+                    <button id="signin_cancel">cancel</button>
+                    <button id="signin_signin">sign in</button>
+                    <p id="signin_response"></p>
+                </div>
+            </div>
+        </div>
+        <div class="cover" id="cover_session">
+            <div id="session" class="popup">
+                <p>create new session</p>
+                <div style="text-align: center">
+                    <span>session name: </span>
+                    <br>
+                    <input type="text" id="session_name">
+                    <br>
+                    <span>requested judges: </span>
+                    <br>
+                    <input type="text" id="session_requestuser">
+                    <button id="session_requestuserbtn">add</button>
+                    <br>
+                    <p id="session_adduserresponse"></p>
+                    <div id="session_addedusers">
+                    </div>
+                    <br>
+                    <span>points: </span>
+                    <br>
+                    <span>taste: </span>
+                    <br>
+                    <input type="number" id="session_taste">
+                    <br>
+                    <span>presentation: </span>
+                    <br>
+                    <input type="number" id="session_present">
+                    <br>
+                    <span>labor: </span>
+                    <br>
+                    <input type="number" id="session_labor">
+                    <br>
+                    <span>creativity: </span>
+                    <br>
+                    <input type="number" id="session_creativity">
+                    <br>
+                    <p>total: <span id="session_total"></span></p>
+                    <br>
+                    <span>number of entries: </span>
+                    <br>
+                    <input type="number" id="session_numentries">
+                    <br>
+                    <div id="session_entry_wrapper">
+                    </div>
+                    <button id="session_cancel">cancel</button>
+                    <button id="session_create">create</button>
+                    <p id="session_response"></p>
+                </div>
+            </div>
+        </div>
+        <div class="cover" id="cover_judge">
+            <div id="judge" class="popup" style="text-align: center">
+                <div id="judge_input_container"></div>
+                <button id="judge_left"> < </button>
+                <button id="judge_right"> > </button>
+            </div>
+        </div>
+        <div id="main">
+            <div class="panel">
+                <div id="left">
+                    <div class="left_panel_section">
+                        <p>account</p>
+                        <div class="spacer"></div>
+                        <div id="account_notsignedin">
+                            <p>not signed in</p>
+                            <button id="create_account">new account</button>
+                            <button id="sign_in">sign in</button>
+                        </div>
+                        <div id="account_signedin">
+                            <p>signed in as [<span id="username"></span>]</p>
+                            <button id="sign_out">sign out</button>
+                        </div>
+                    </div>
+                    <div class="left_panel_section">
+                        <p>sessions</p>
+                        <div class="spacer"></div>
+                        <button id="session_new">create new</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel" id="right">
+                <div class="left_panel_section">
+                    <p>sessions</p>
+                    <div class="spacer"></div>
+                    <div id="session_list">
+                </div>
+            </div>
+        </div>
+        <script src="client/cookie.js"></script>
+        <script src="client/request.js"></script>
+        <script src="client/session_ui.js"></script>
+        <script src="client/judge_ui.js"></script>
+        <script src="client/index.js"></script>
+    </body>
+</html>
