@@ -47,6 +47,7 @@ function sessionUI() {
             total: getTotalScore(),
             num_entries: Number(a('session_numentries').value),
             entries: entries,
+            judged: [],
         });
         console.log(str);
         request('/newsession', {

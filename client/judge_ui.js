@@ -1,7 +1,3 @@
-function a(id) {
-    return document.getElementById(id);
-}
-
 function submit() {
     judgedata[current_judge_entry - 1] = [
         Number(a('judge_taste').value),
@@ -12,20 +8,41 @@ function submit() {
     if (!confirm("are you sure? you can't change your scores after this.")) {
         return;
     }
-    let data = [];
+    console.log(judgedata);
+    let str = '';
     for (let i = 0; i < judgedata.length; i++) {
-        let sum = 0;
         for (let j = 0; j < judgedata[i].length; j++) {
-            sum += judgedata[i][j];
+            if (judgedata[i][j] === '') {
+                alert('not all values have been filled out. please try again.');
+                return;
+            }
         }
-        data.push(sum);
     }
-    console.log(data);
+    for (let i = 0; i < judgedata.length; i++) {
+        str += String(judgedata[i]);
+        str += '|';
+    }
+    str = str.substring(0, str.length - 1);
+    console.log(str);
     request('/judge', {
-        'data': String([])
+        'data': str,
+        'sessname': sessiondata.name,
     }).then(r => {
         console.log(r);
-    })
+        if (r.msg === 'y') {
+            alert('successfully saved scores');
+            a('cover_judge').style.display = 'none';
+            return;
+        } else {
+            alert('something went wrong. server message: ' + r.msg);
+        }
+    });
+}
+
+function validate(elem) {
+    if (elem.value > 10) {
+        elem.value = 10;
+    }
 }
 
 function disp(sessiondata, num) {
@@ -33,21 +50,21 @@ function disp(sessiondata, num) {
     <p>session: ${sessiondata.name}</p>
     <p>entry number: ${num}</p>
     <p style="color:var(--accent)">${sessiondata.entries[num - 1][1]} made by ${sessiondata.entries[num - 1][0]}</p>
-    <span>taste (0-${sessiondata.taste}):</span>
+    <span>taste (0-10):</span>
     <br>
-    <input type="number" id="judge_taste" value="${judgedata[num - 1][0]}">
+    <input type="number" id="judge_taste" value="${judgedata[num - 1][0]}" onchange="validate(this)">
     <br>
-    <span>presentation (0-${sessiondata.present}):</span>
+    <span>presentation (0-10):</span>
     <br>
-    <input type="number" id="judge_present" value="${judgedata[num - 1][1]}">
+    <input type="number" id="judge_present" value="${judgedata[num - 1][1]}" onchange="validate(this)">
     <br>
-    <span>labor (0-${sessiondata.labor}):</span>
+    <span>labor (0-10):</span>
     <br>
-    <input type="number" id="judge_labor" value="${judgedata[num - 1][2]}">
+    <input type="number" id="judge_labor" value="${judgedata[num - 1][2]}" onchange="validate(this)">
     <br>
-    <span>creativity: (0-${sessiondata.creativity})</span>
+    <span>creativity (0-10):</span>
     <br>
-    <input type="number" id="judge_creativity" value="${judgedata[num - 1][3]}">
+    <input type="number" id="judge_creativity" value="${judgedata[num - 1][3]}" onchange="validate(this)">
     <br>
     ${(num => {
         return num === window.entry_num ? '<button onclick="submit()">finish</button>' : ''

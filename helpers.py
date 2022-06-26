@@ -21,3 +21,13 @@ def checkpw(username, pw):
 def session_exists(name):
   f = open(PATH + 'sessions.txt')
   contents = f.read()
+
+
+def get_session(name):
+  contents = open(PATH + 'sessions.txt', 'r').read().split('\n')
+  for i in contents:
+    if i != '':
+      line = i.split('>')
+      if line[0] == name:
+        return line[1]
+  return ''
