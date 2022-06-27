@@ -114,16 +114,8 @@
         </div>
         <div class="cover" id="cover_results">
             <div id="results" class="popup">
-                <p>results</p>
+                <p id="results_title">results</p>
                 <div id="results_wrapper">
-                    <table id="results_table">
-                        <tr class="header">
-                            <th>place</th>
-                            <th>name</th>
-                            <th>entry</th>
-                            <th>score</th>
-                        </tr>
-                    </table>
                 </div>
                 <br>
                 <p>more detailed data coming soon</p>
@@ -131,26 +123,46 @@
             </div>
         </div>
         <div id="main">
-            <div class="panel">
-                <div id="left">
-                    <div class="left_panel_section">
-                        <p>account</p>
-                        <div class="spacer"></div>
-                        <div id="account_notsignedin">
-                            <p>not signed in</p>
-                            <button id="create_account">new account</button>
-                            <button id="sign_in">sign in</button>
-                        </div>
-                        <div id="account_signedin">
-                            <p>signed in as [<span id="username"></span>]</p>
-                            <button id="sign_out">sign out</button>
-                        </div>
+            <div class="panel" id="left">
+                <div class="left_panel_section">
+                    <p>account</p>
+                    <div class="spacer"></div>
+                    <div id="account_notsignedin">
+                        <p>not signed in</p>
+                        <button id="create_account">new account</button>
+                        <button id="sign_in">sign in</button>
                     </div>
-                    <div class="left_panel_section">
-                        <p>sessions</p>
-                        <div class="spacer"></div>
-                        <button id="session_new">create new</button>
+                    <div id="account_signedin">
+                        <p>signed in as [<span id="username"></span>]</p>
+                        <button id="sign_out">sign out</button>
                     </div>
+                </div>
+                <div class="left_panel_section">
+                    <p>sessions</p>
+                    <div class="spacer"></div>
+                    <button id="session_new">create new</button>
+                </div>
+                <div class="left_panel_section">
+                    <p>info</p>
+                    <div class="spacer"></div>
+                    <p>version: v0.1</p>
+                    <p>session status codes:</p>
+                    <p>
+                        <span style="color: var(--accent)">done</span> -
+                        everyone has judged, results are available
+                    </p>
+                    <p>
+                        <span style="color: var(--accent_purple)">waiting</span> -
+                        you have judged, but not everyone has judged yet
+                    </p>
+                    <p>
+                        <span style="color: var(--accent_blue)">open</span> -
+                        you have been requested to judge, but you haven't yet
+                    </p>
+                    <p>
+                        <span style="color: var(--accent_red)">unauth</span> -
+                        you aren't allowed to judge this session
+                    </p>
                 </div>
             </div>
             <div class="panel" id="right">

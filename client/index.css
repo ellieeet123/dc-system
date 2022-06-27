@@ -4,7 +4,7 @@
     --accent_red: hsl(4, 94%, 49%);
     --accent_purple: hsl(273, 80%, 63%);
   }
-  
+
   body {
     background: #17171a;
     color: #ffffff;
@@ -15,7 +15,7 @@
     flex-direction: row;
     justify-content: center;
   } 
-  
+
   div.popup {
     width: 50%;
     border: 1px solid white;
@@ -72,13 +72,13 @@
   button:focus {
     box-shadow: 0px 0px 10px 1px #aff;
   }
-  
+
   #main {
     display: flex;
     flex-direction: row;
     justify-content: center;
   }
-  
+
   .panel {
     background: #333;
     flex-grow: 1;
@@ -91,8 +91,9 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    max-width: 40%;
   }
-  
+
   .left_panel_section {
     background: #17171a;
     flex-grow: 1;
@@ -101,15 +102,15 @@
     border-radius: 10px;
     text-align: center;
   }
-  
+
   #cover_pw {
     display: block;
   }
-  
+
   #username {
     color: var(--accent)
   }
-  
+
   .session {
     background: #333;
     margin: 10px;
@@ -118,12 +119,12 @@
     display: flex;
     flex-direction: row;
   }
-  
+
   .session>p {
     padding-left: 5px;
     padding-right: 5px;
   }
-  
+
   #right {
     max-width: 60%;
   }
@@ -149,4 +150,22 @@ tr.header {
 
 th, td {
   padding: 5px;
+}
+
+@media (max-aspect-ratio: 2/3) {
+  #main {
+    flex-direction: column;
+  }
+  .panel {
+    max-width: 100% !important /* omg css is annoying */;
+  }
+  #left {
+    order: 2;
+  }
+  #right {
+    order: 1;
+  }
+  .popup {
+    width: 85% !important;
+  }
 }

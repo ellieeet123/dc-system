@@ -38,7 +38,13 @@ function results(name) {
             entries.sort((a, b) => {
                 return b.score - a.score;
             });
-            let html = '';
+            let html = `<table id="results_table">
+            <tr class="header">
+                <th>place</th>
+                <th>name</th>
+                <th>entry</th>
+                <th>score/${session.total * session.judges.length}</th>
+            </tr>`;
             for (let i in entries) {
                 html += `
                     <tr>
@@ -49,7 +55,69 @@ function results(name) {
                     </tr>
                 `;
             }
-            a('results_table').innerHTML += html;
+            html += `</table>
+            <p>maximum scores</p>
+            <table>
+                <tr class="header">
+                    <th>taste</th>
+                    <th>presentation</th>
+                    <th>labor</th>
+                    <th>creativity</th>
+                    <th>total</th>
+                </tr>
+                <tr>
+                    <td>${session.taste}</td>
+                    <td>${session.present}</td>
+                    <td>${session.labor}</td>
+                    <td>${session.creativity}</td>
+                    <td>${session.total}</td>
+                </tr>
+            </table>
+            `;
+            let temphtml = ``;
+            for (let i in session.judges) {
+                temphtml += `
+                <p>score breakdown: 
+                    <span style="color: var(--accent)">
+                        ${session.judges[i]}
+                    </span>
+                </p>
+                <table>
+                <tr class="header">
+                    <th>name</th>
+                    <th>entry</th>
+                    <th>taste</th>
+                    <th>present.</th>
+                    <th>labor</th>
+                    <th>creat.</th>
+                    <th>total</th>
+                </tr>
+                `;
+                for (let j in entries) {
+                    temphtml += `
+                        <tr>
+                            <td>${entries[j].name}</td>
+                            <td>${entries[j].entry}</td>
+                            <td>${data[i][j][0]}</td>
+                            <td>${data[i][j][1]}</td>
+                            <td>${data[i][j][2]}</td>
+                            <td>${data[i][j][3]}</td>
+                            <td>${
+                                data[i][j][0] + 
+                                data[i][j][1] + 
+                                data[i][j][2] + 
+                                data[i][j][3]
+                            }</td>
+                        </tr>
+                    `;
+                }
+                temphtml += `</table><br>`;
+            }
+            html += temphtml;
+            a('results_wrapper').innerHTML = html;
+            a('results_title').innerHTML = `
+                results for session <span style="color: var(--accent)">${session.name}</span>
+            `;
         });
     });
 }
