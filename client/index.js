@@ -127,7 +127,6 @@ request('/getsessions', {}).then(result => {
         console.log(e, result);
         a('session_list').innerHTML = '<p>something went wrong, try reloading</p>';
     }
-    console.log(sessions);
     let newsessions = [];
     window.sessiondata = {};
     for (let i = 0; i < sessions.length; i += 2) {
@@ -152,7 +151,6 @@ request('/getsessions', {}).then(result => {
                 }
             }
         }
-        console.log(data);
         sessiondata[session.name] = data;
         let status = '';
         let index = session.judges.indexOf(getCookie('username'));

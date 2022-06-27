@@ -1,5 +1,3 @@
-from cgitb import text
-from pickle import GLOBAL
 from sanic import Sanic
 from sanic.response import html, file, json
 import helpers
@@ -232,7 +230,7 @@ async def judge(request):
                 "msg": "one or more entries does not have four values",
             })
         for j in range(4):
-            data[i][j] = int(data[i][j])
+            data[i][j] = float(data[i][j])
             if data[i][j] > 10:
                 return json({
                     "msg": "one or more values above 10",
@@ -310,7 +308,7 @@ async def clientFile(request, filename):
     return await file(PATH + 'client/font/' + filename)
 
 app.run(
-    host = '0.0.0.0',
+    host = '192.168.1.223',
     port = '8444',
     debug = False
 )

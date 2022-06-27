@@ -27,6 +27,7 @@
     transform: translate(-50%, -50%);
     max-height: 80%;
     overflow-y: auto;
+    text-align: center;
   }
   div.popup p {
     text-align: center;
@@ -127,3 +128,25 @@
     max-width: 60%;
   }
   
+table {
+  text-align: center;
+  width: 100%;
+  border: 1px solid white;
+}
+
+tr {
+  background: #444;
+}
+
+tr:nth-of-type(2n) {
+  background: #333;
+}
+
+tr.header {
+  background: #ddd;
+  color: #111;
+}
+
+th, td {
+  padding: 5px;
+}

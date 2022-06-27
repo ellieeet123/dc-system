@@ -106,10 +106,28 @@
             </div>
         </div>
         <div class="cover" id="cover_judge">
-            <div id="judge" class="popup" style="text-align: center">
+            <div id="judge" class="popup">
                 <div id="judge_input_container"></div>
                 <button id="judge_left"> < </button>
                 <button id="judge_right"> > </button>
+            </div>
+        </div>
+        <div class="cover" id="cover_results">
+            <div id="results" class="popup">
+                <p>results</p>
+                <div id="results_wrapper">
+                    <table id="results_table">
+                        <tr class="header">
+                            <th>place</th>
+                            <th>name</th>
+                            <th>entry</th>
+                            <th>score</th>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <p>more detailed data coming soon</p>
+                <button id="results_close">close</button>
             </div>
         </div>
         <div id="main">
@@ -145,6 +163,7 @@
         </div>
         <script src="client/cookie.js"></script>
         <script src="client/request.js"></script>
+        <script src="client/parsedata.js"></script>
         <script src="client/session_ui.js"></script>
         <script src="client/judge_ui.js"></script>
         <script src="client/results_ui.js"></script>

@@ -1,1 +1,2 @@
 tyuiop>{"name": "tyuiop", "judges": ["ellio", "two"], "taste": 8, "present": 6, "labor": 4, "creativity": 2, "total": 20, "num_entries": 2, "entries": [["bob", "pie"], ["joe", "cake"]], "judged": ["ellio", "two"]}
+test>{"name": "test", "judges": ["ellio", "two", "three"], "taste": 20, "present": 10, "labor": 10, "creativity": 15, "total": 55, "num_entries": 3, "entries": [["bob", "pie"], ["abby", "creme cookies"], ["aiden", "pig poop"]], "judged": ["ellio", "two", "three"]}
