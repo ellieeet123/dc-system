@@ -6,7 +6,24 @@ function sumOfList(list) {
     return sum / 100;
 }
 
-function results(name) {
+function weightTaste(session, num) {
+    return num / (session.taste / 10);
+}
+
+function weightPresent(session, num) {
+    return num / (session.present / 10);
+}
+
+function weightLabor(session, num) {
+    return num / (session.labor / 10);
+}
+
+function weightCreativity(session, num) {
+    return num / (session.creativity / 10);
+}
+
+function results(name, weighted) {
+    window.resultsName = name;
     a('cover_results').style.display = 'block';
     a('results_close').onclick = () => {
         a('cover_results').style.display = 'none';
@@ -98,15 +115,42 @@ function results(name) {
                         <tr>
                             <td>${entries[j].name}</td>
                             <td>${entries[j].entry}</td>
-                            <td>${data[i][j][0]}</td>
-                            <td>${data[i][j][1]}</td>
-                            <td>${data[i][j][2]}</td>
-                            <td>${data[i][j][3]}</td>
+                            <td>${(()=>{
+                                if (weighted) {
+                                    return weightTaste(session, data[i][j][0]);
+                                }
+                                return data[i][j][0];
+                            })()}</td>
+                            <td>${(()=>{
+                                if (weighted) {
+                                    return weightPresent(session, data[i][j][1]);
+                                }
+                                return data[i][j][1];
+                            })()}</td>
+                            <td>${(()=>{
+                                if (weighted) {
+                                    return weightLabor(session, data[i][j][2]);
+                                }
+                                return data[i][j][2];
+                            })()}</td>
+                            <td>${(()=>{
+                                if (weighted) {
+                                    return weightCreativity(session, data[i][j][3]);
+                                }
+                                return data[i][j][3];
+                            })()}</td>
                             <td>${
-                                data[i][j][0] + 
-                                data[i][j][1] + 
-                                data[i][j][2] + 
-                                data[i][j][3]
+                                (()=>{
+                                    if (weighted) {
+                                        return (
+                                            weightTaste(session, data[i][j][0]) + 
+                                            weightPresent(session, data[i][j][1]) + 
+                                            weightLabor(session, data[i][j][2]) + 
+                                            weightCreativity(session, data[i][j][3])
+                                        );
+                                    }
+                                    return sumOfList(data[i][j]);
+                                })()
                             }</td>
                         </tr>
                     `;

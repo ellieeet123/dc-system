@@ -195,7 +195,7 @@ request('/getsessions', {}).then(result => {
             break;
         case "done":
             color = '--accent';
-            btn = `<button onclick="(()=>{results('${session.name}')})()">view results</button>`;
+            btn = `<button onclick="(()=>{results('${session.name}', false)})()">view results</button>`;
             break;
         default:
             // this shouldn't happen

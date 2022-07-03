@@ -299,11 +299,11 @@ async def getsessiondata(request, sessname):
             "data": "",
         });
 
-@app.route('/client/<filename:str>')
+@app.get('/client/<filename:str>')
 async def clientFile(request, filename):
     return await file(PATH + 'client/' + filename)
 
-@app.route('/font/<filename:str>')
+@app.get('/font/<filename:str>')
 async def clientFile(request, filename):
     return await file(PATH + 'client/font/' + filename)
 
