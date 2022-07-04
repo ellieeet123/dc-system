@@ -114,99 +114,11 @@ if (getCookie('username') === '') {
 }
 
 a('session_new').onclick = () => {
-    a('cover_session').style.display = 'block';
+    if (getCookie('username') === '') {
+        alert('please sign in');
+    } else {
+        a('cover_session').style.display = 'block';
+    }
 }
 sessionUI();
-
-request('/getsessions', {}).then(result => {
-    try {
-        window.sessions = JSON.parse(result.msg).data;
-        window.totalsessions = JSON.parse(result.msg).total;
-    } catch (e) {
-        window.sessions = [];
-        console.log(e, result);
-        a('session_list').innerHTML = '<p>something went wrong, try reloading</p>';
-    }
-    let newsessions = [];
-    window.sessiondata = {};
-    for (let i = 0; i < sessions.length; i += 2) {
-        newsessions.push(sessions[i]);
-        sessiondata[sessions[i].name] = sessions[i + 1];
-    }
-    sessions = newsessions;
-    a('session_list').innerHTML = '';
-    window.sessionobject = {};
-    for (var i of window.sessions) {
-        window.sessionobject[i.name] = i;
-    }
-    for (var i = 0; i < sessions.length; i++) {
-        var session = sessions[i];
-        data = sessiondata[session.name].split('&');
-        for (let i in data) {
-            data[i] = data[i].split('|');
-            for (let j in data[i]) {
-                data[i][j] = data[i][j].split(',');
-                for (let k in data[i][j]) {
-                    data[i][j][k] = parseFloat(data[i][j][k]);
-                }
-            }
-        }
-        sessiondata[session.name] = data;
-        let status = '';
-        let index = session.judges.indexOf(getCookie('username'));
-        if (index === -1) {
-            status = "unauth"
-        }
-        else if (session.judged.indexOf(getCookie('username')) === -1) {
-            status = "open"
-        }
-        else if (
-            session.judged.includes(getCookie('username')) 
-            && session.judges.length !== session.judged.length
-        ) {
-            status = "waiting"
-        } else {
-            status = "done";
-        }
-        a('session_list').innerHTML += `
-<div class="session">
-<p style="color: var(--accent)">${session.name}</p>
-<p> | </p>
-<p style="color: var(${(() => {
-    /*
-    status codes:
-        unauth = not authorized to judge this session
-        open = waiting for user to judge this session
-        waiting = user has judged this session, but waiting for others to do the same
-        done = all users have judged this session
-    */
-    let color = '';
-    let btn = '';
-    switch (status) {
-        case "unauth":
-            color = '--accent_red';
-            break;
-        case "open":
-            color = '--accent_blue';
-            btn = `<button onclick="(()=>{judge('${session.name}')})()">judge</button>`;
-            break;
-        case "waiting":
-            color = '--accent_purple';
-            break;
-        case "done":
-            color = '--accent';
-            btn = `<button onclick="(()=>{results('${session.name}', false)})()">view results</button>`;
-            break;
-        default:
-            // this shouldn't happen
-            break;
-    }
-    return color + ')">' + status + '</p>' + btn;
-})()}
-</div>
-    `;
-    }
-    if (window.totalsessions > 10) {
-        a('session_list').innerHTML += 'note: some sessions are not shown due to there being too many.';
-    }
-});
+updateSessionList();

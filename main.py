@@ -1,7 +1,13 @@
+
+# dessert contest system backend
+# warning, this is a messy file
+
 from sanic import Sanic
 from sanic.response import html, file, json
 import helpers
 import json as non_sanic_json
+import time
+import os
 
 PATH = __file__[:__file__.rfind('/')+1]
 
@@ -96,20 +102,18 @@ async def checkusername(request):
         return json({
             "msg": "i"
         })
-    username = request.form.get('name')
-    f = open(PATH + 'users.txt', 'r')
-    contents = f.read()
-    f.close()
-    for x in contents.split('\n'):
-        if x.split(',')[0] == username:
-            return json({
-                "msg": "y"
-            })
-    return json({
-        "msg": "n"
-    })
+    if helpers.checkusername(request.form.get('name')):
+        return json({
+            "msg": "y"
+        })
+    else:
+        return json({
+            "msg": "n"
+        })
 
 @app.post('/newsession')
+# warning, input validation here is
+# kind of ugly 
 async def newsession(request):
     if not request.cookies.get('gpw') == GLOBAL_PASSWORD:
         return json({
@@ -117,17 +121,88 @@ async def newsession(request):
         })
     username = request.form.get('name')
     pw       = request.form.get('pass')
+    obj      = {}
+    try:
+        obj = non_sanic_json.loads(
+            request.form.get('session')
+        )
+        keys = [
+            'name',
+            'judges',
+            'entries',
+            'taste',
+            'present',
+            'labor',
+            'creativity',
+        ]
+        for i in keys:
+            if not i in obj:
+                return json({
+                    "msg": "one or more necesary keys not found in json",
+                })
+        try:
+            obj['taste'] = float(obj['taste'])
+            obj['present'] = float(obj['present'])
+            obj['labor'] = float(obj['labor'])
+            obj['creativity'] = float(obj['creativity'])
+        except:
+            return json({
+                "msg": "score weights not convertable to float values"
+            })
+        obj['total'] = (
+            obj['taste'] + 
+            obj['present'] +
+            obj['labor'] +
+            obj['creativity']
+        )
+        if (
+            obj['taste'] <= 0 or 
+            obj['present'] <= 0 or
+            obj['labor'] <= 0 or
+            obj['creativity'] <= 0
+        ):
+            return json({
+                "msg": "score weights must be above zero",
+            })
+        for i in obj['entries']:
+            if not isinstance(i, list):
+                return json({
+                    "msg": "contents of list `judges` must be arrays"
+                })
+            if len(i) != 2:
+                return json({
+                    "msg": "items of list `judges` must be arrays with two items"
+                })
+        obj['judged'] = []
+        if len(obj['judges']) < 1:
+            return json({
+                "msg": "you must include at least one judge"
+            })
+        if len(obj['entries']) < 1:
+            return json({
+                "msg": "you must include at least one entry"
+            })
+        for i in obj['judges']:
+            if not helpers.checkusername(i):
+                return json({
+                    "msg": "one or more requested judges does not exist"
+                })
+    except:
+        return json({
+            "msg": "an error occured while parsing & validating json input, please try again",
+        })
     if helpers.checkpw(username, pw):
         try:
-            open(PATH + 'sessions/' + sessname + '.txt', 'r')
+            open(PATH + 'sessions/' + obj['name'] + '.txt', 'r')
             return json({
                 "msg": "name already in use"
             })
         except:
-            sessname = request.form.get('session_name').replace(">", "")
-            data = non_sanic_json.loads(request.form.get('session'))
-            num_judges = len(data['judges'])
-            num_entries = len(data['entries'])
+            sessname    = obj['name']
+            num_judges  = len(obj['judges'])
+            num_entries = len(obj['entries'])
+            obj['createdby'] = username
+            obj['timestamp'] = str(time.time())
             """
                 sort-of spreadsheet for data. looks like this:
                     ||-----------------||
@@ -145,7 +220,7 @@ async def newsession(request):
                 )[:-1] # remove last newline
             )
             open(PATH + 'sessions.txt', 'a').write(
-                sessname + '>' + request.form.get('session') + '\n'
+                sessname + '>' + non_sanic_json.dumps(obj) + '\n'
             )
             return json({
                 "msg": "y",
@@ -264,7 +339,7 @@ async def judge(request):
     index = 0
     for i in contents:
         if i != '':
-            line = i.split('>')
+            line = i.split('>', 1)
             if line[0] == session['name']:
                 line[1] = non_sanic_json.dumps(session)
                 contents[index] = '>'.join(line)
@@ -299,16 +374,55 @@ async def getsessiondata(request, sessname):
             "data": "",
         });
 
+@app.post('/delsession')
+async def delsession(request):
+    if not request.cookies.get('gpw') == GLOBAL_PASSWORD:
+        return json({
+            "msg": "i"
+        })
+    sessname = request.form.get('sessname')
+    username = request.cookies.get('username')
+    pw = request.cookies.get('pw')
+    if not helpers.checkpw(username, pw):
+        return json({
+            "msg": "n",
+        })
+    session = non_sanic_json.loads(
+        helpers.get_session(sessname)
+    )
+    if session['createdby'] != username:
+        return json({
+            "msg": "n"
+        })
+    f = open(PATH + 'sessions.txt')
+    contents = f.read().split('\n')
+    f.close()
+    index = 0
+    for i in contents:
+        if i != '':
+            line = i.split('>', 1)
+            if line[0] == sessname:
+                break
+        index += 1
+    del contents[index]
+    f = open(PATH + 'sessions.txt', 'w')
+    f.write('\n'.join(contents))
+    f.close()
+    return json({
+        "msg": "y"
+    })
+
+
 @app.get('/client/<filename:str>')
 async def clientFile(request, filename):
     return await file(PATH + 'client/' + filename)
 
 @app.get('/font/<filename:str>')
-async def clientFile(request, filename):
+async def clientFont(request, filename):
     return await file(PATH + 'client/font/' + filename)
 
 app.run(
-    host = '192.168.1.223',
+    host = '0.0.0.0',
     port = '8444',
     debug = False
 )

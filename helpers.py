@@ -18,10 +18,14 @@ def checkpw(username, pw):
       return True
   return False
 
-def session_exists(name):
-  f = open(PATH + 'sessions.txt')
+def checkusername(username):
+  f = open(PATH + 'users.txt', 'r')
   contents = f.read()
-
+  f.close()
+  for i in contents.split('\n'):
+    if i.split(',')[0] == username:
+      return True
+  return False
 
 def get_session(name):
   contents = open(PATH + 'sessions.txt', 'r').read().split('\n')

@@ -6,20 +6,22 @@ function sumOfList(list) {
     return sum / 100;
 }
 
+// mind the ugly round-off error prevention
+
 function weightTaste(session, num) {
-    return num / (session.taste / 10);
+    return (num * 1000) / (session.taste * 1000 / 10000) / 1000;
 }
 
 function weightPresent(session, num) {
-    return num / (session.present / 10);
+    return (num * 1000) / (session.present * 1000 / 10000) / 1000;
 }
 
 function weightLabor(session, num) {
-    return num / (session.labor / 10);
+    return (num * 1000) / (session.labor * 1000 / 10000) / 1000;
 }
 
 function weightCreativity(session, num) {
-    return num / (session.creativity / 10);
+    return (num * 1000) / (session.creativity * 1000 / 10000) / 1000;
 }
 
 function results(name, weighted) {
@@ -33,17 +35,17 @@ function results(name, weighted) {
         request('/getsessiondata/' + name, {}).then(r => {
             var data = parsedata(r.data);
             console.log(session);
-            console.log(data);
             var entries = [];
             for (let i in session.entries) {
                 d = JSON.parse(JSON.stringify(data)); // deep copy
+                // turn 3d list into 2d list of total entry scores
                 for (let j = 0; j < d.length; j++) {
                     for (let k = 0; k < d[j].length; k++) {
                         d[j][k] = sumOfList(d[j][k]);
                     }
                 }
                 let scoreslist = [];
-                for (let j = 0; j < d[0].length; j++) {
+                for (let j = 0; j < d.length; j++) {
                     scoreslist.push(d[j][i]);
                 }
                 entries.push({
@@ -83,14 +85,18 @@ function results(name, weighted) {
                     <th>total</th>
                 </tr>
                 <tr>
-                    <td>${session.taste}</td>
-                    <td>${session.present}</td>
-                    <td>${session.labor}</td>
-                    <td>${session.creativity}</td>
-                    <td>${session.total}</td>
+                    <td>${!weighted ? session.taste      : 10}</td>
+                    <td>${!weighted ? session.present    : 10}</td>
+                    <td>${!weighted ? session.labor      : 10}</td>
+                    <td>${!weighted ? session.creativity : 10}</td>
+                    <td>${!weighted ? session.total      : 40}</td>
                 </tr>
             </table>
             `;
+            a('weighted_scores_label').onclick = () => {
+                a('results_showweighted').checked ^= 1; // toggle
+                results(window.resultsName, a('results_showweighted').checked);
+            }
             let temphtml = ``;
             for (let i in session.judges) {
                 temphtml += `

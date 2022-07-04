@@ -32,6 +32,7 @@ function submit() {
         if (r.msg === 'y') {
             alert('successfully saved scores');
             a('cover_judge').style.display = 'none';
+            updateSessionList();
             return;
         } else {
             alert('something went wrong. server message: ' + r.msg);

@@ -1,5 +1,6 @@
 <html>
     <head>
+        <title>dcsys v2.0</title>
         <link rel="stylesheet" href="client/font.css">
         <link rel="stylesheet" href="client/index.css">
     </head>
@@ -120,7 +121,7 @@
                         type="checkbox" 
                         id="results_showweighted" 
                         onclick="results(window.resultsName, this.checked)">
-                    <span>show weighted scores</span>
+                    <span id="weighted_scores_label">show weighted scores</span>
                 </p>
                 <div id="results_wrapper">
                 </div>
@@ -131,6 +132,9 @@
         </div>
         <div id="main">
             <div class="panel" id="left">
+                <div class="left_panel_section">
+                    dessert contest system v2.0
+                </div>
                 <div class="left_panel_section">
                     <p>account</p>
                     <div class="spacer"></div>
@@ -152,7 +156,8 @@
                 <div class="left_panel_section">
                     <p>info</p>
                     <div class="spacer"></div>
-                    <p>version: v0.1</p>
+                    <p>version: v2.0</p>
+                    <div class="spacer"></div>
                     <p>session status codes:</p>
                     <p>
                         <span style="color: var(--accent)">done</span> -
@@ -180,9 +185,13 @@
                 </div>
             </div>
         </div>
+        <div id="alert_container">
+            <div class="alert">test test test test test</div>
+        </div>
         <script src="client/cookie.js"></script>
         <script src="client/request.js"></script>
         <script src="client/parsedata.js"></script>
+        <script src="client/alert.js"></script>
         <script src="client/session_ui.js"></script>
         <script src="client/judge_ui.js"></script>
         <script src="client/results_ui.js"></script>
