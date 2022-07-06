@@ -187,7 +187,7 @@ function updateSessionList() {
             }
             a('session_list').innerHTML += `
     <div class="session">
-    <p style="color: var(--accent)">${session.name}</p>
+    <p style="color: var(--accent1)">${session.name}</p>
     <p> | </p>
     <p style="color: var(${(() => {
         /*
@@ -201,18 +201,18 @@ function updateSessionList() {
         let btn = '';
         switch (status) {
             case "unauth":
-                color = '--accent_red';
+                color = '--accent3';
                 break;
             case "open":
-                color = '--accent_blue';
+                color = '--accent2';
                 btn = `<button onclick="(()=>{judge('${session.name}')})()">judge</button>`;
                 break;
             case "waiting":
-                color = '--accent_purple';
+                color = '--accent4';
                 break;
             case "done":
-                color = '--accent';
-                btn = `<button onclick="(()=>{results('${session.name}', false)})()">view results</button>`;
+                color = '--accent1';
+                btn = `<button onclick="(()=>{results('${session.name}', false)})()">results</button>`;
                 break;
             default:
                 // this shouldn't happen

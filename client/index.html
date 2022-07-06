@@ -1,8 +1,8 @@
 <html>
     <head>
-        <title>dcsys v2.0</title>
+        <title>dcsys v2.1</title>
         <link rel="stylesheet" href="client/font.css">
-        <link rel="stylesheet" href="client/index.css">
+        <link rel="stylesheet" href="style">
     </head>
     <body>
         <div class="cover" id="cover_pw">
@@ -133,7 +133,7 @@
         <div id="main">
             <div class="panel" id="left">
                 <div class="left_panel_section">
-                    dessert contest system v2.0
+                    dessert contest system v2.1
                 </div>
                 <div class="left_panel_section">
                     <p>account</p>
@@ -154,25 +154,42 @@
                     <button id="session_new">create new</button>
                 </div>
                 <div class="left_panel_section">
+                    <p>settings</p>
+                    <div class="spacer"></div>
+                    <form action="/settings" method="POST">
+                        <span>color theme</span>
+                        <br>
+                        <select name="theme">
+                            <option value="dark"> dark </option>
+                            <option value="light"> light </option>
+                            <option value="midnight"> midnight </option>
+                            <option value="forest"> forest </option>
+                            <option value="slate"> slate </option>
+                        </select>
+                        <div class="spacer"></div>
+                        <input value="save" type="submit">
+                    </form>
+                </div>
+                <div class="left_panel_section">
                     <p>info</p>
                     <div class="spacer"></div>
-                    <p>version: v2.0</p>
+                    <p>version: v2.1</p>
                     <div class="spacer"></div>
                     <p>session status codes:</p>
                     <p>
-                        <span style="color: var(--accent)">done</span> -
+                        <span style="color: var(--accent1)">done</span> -
                         everyone has judged, results are available
                     </p>
                     <p>
-                        <span style="color: var(--accent_purple)">waiting</span> -
+                        <span style="color: var(--accent4)">waiting</span> -
                         you have judged, but not everyone has judged yet
                     </p>
                     <p>
-                        <span style="color: var(--accent_blue)">open</span> -
+                        <span style="color: var(--accent2)">open</span> -
                         you have been requested to judge, but you haven't yet
                     </p>
                     <p>
-                        <span style="color: var(--accent_red)">unauth</span> -
+                        <span style="color: var(--accent3)">unauth</span> -
                         you aren't allowed to judge this session
                     </p>
                 </div>
@@ -185,9 +202,7 @@
                 </div>
             </div>
         </div>
-        <div id="alert_container">
-            <div class="alert">test test test test test</div>
-        </div>
+        <div id="alert_container"></div>
         <script src="client/cookie.js"></script>
         <script src="client/request.js"></script>
         <script src="client/parsedata.js"></script>

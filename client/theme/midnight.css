@@ -1,0 +1,17 @@
+* {
+    /* midnight theme */
+    --accent1: hsl(152, 94%, 49%);
+    --accent2: hsl(190, 94%, 49%);
+    --accent3: hsl(209, 100%, 49%);
+    --accent4: hsl(273, 80%, 63%);
+    --bg: hsl(267, 94%, 7%);
+    --bg_light: hsl(247, 44%, 20%);
+    --text: hsl(0, 0%, 100%);
+    --border: hsl(0, 0%, 100%);
+    --border_btn: hsl(247, 50%, 85%);
+    --shadow_btn: hsl(180, 100%, 83%);
+    --table_dark: hsl(247, 44%, 20%);
+    --table_light: hsl(247, 44%, 30%);
+    --table_head_bg: hsl(0, 0%, 100%);
+    --table_head_text: hsl(267, 94%, 7%);
+}

@@ -30,9 +30,13 @@ function results(name, weighted) {
     a('results_close').onclick = () => {
         a('cover_results').style.display = 'none';
     }
-    request('/getsession/' + name, {}).then(r => {
+    request('/getsession', {
+        sessname: name
+    }).then(r => {
         var session = JSON.parse(r.data);
-        request('/getsessiondata/' + name, {}).then(r => {
+        request('/getsessiondata', {
+            sessname: name
+        }).then(r => {
             var data = parsedata(r.data);
             console.log(session);
             var entries = [];
@@ -101,7 +105,7 @@ function results(name, weighted) {
             for (let i in session.judges) {
                 temphtml += `
                 <p>score breakdown: 
-                    <span style="color: var(--accent)">
+                    <span style="color: var(--accent1)">
                         ${session.judges[i]}
                     </span>
                 </p>
@@ -166,7 +170,7 @@ function results(name, weighted) {
             html += temphtml;
             a('results_wrapper').innerHTML = html;
             a('results_title').innerHTML = `
-                results for session <span style="color: var(--accent)">${session.name}</span>
+                results for session <span style="color: var(--accent1)">${session.name}</span>
             `;
         });
     });

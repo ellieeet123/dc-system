@@ -1,15 +1,9 @@
-* {
-  --accent: hsl(152, 94%, 49%);
-  --accent_blue: hsl(190, 94%, 49%);
-  --accent_red: hsl(4, 94%, 49%);
-  --accent_purple: hsl(273, 80%, 63%);
-}
-
 body {
-  background: #17171a;
-  color: #ffffff;
+  background: var(--bg);
+  color: var(--text);
   font-family: Ubuntu;
 }
+
 div.controls {
   display: flex;
   flex-direction: row;
@@ -34,7 +28,7 @@ div.popup p {
 }
 div.spacer {
   height: 1px;
-  background: #333;
+  background: var(--bg_light);
   margin: 10px;
 }
 .cover {
@@ -43,19 +37,18 @@ div.spacer {
   height: 100%;
   top: 0px;
   left: 0px;
-  background: #17171a;
+  background: var(--bg);
   z-index: 100;
   display: none;
 }
-input[type="text"], 
-input[type="number"], 
-input[type="password"],
-button {
-  border: 4px solid #555;
+input,
+button,
+select {
+  border: 4px solid var(--border_btn);
   background-image: none;
-  background-color: #333;
+  background-color: var(--bg_light);
   border-radius: 25px;
-  color: #fff;
+  color: var(--text);
   padding: 10px;
   margin: 5px;
   transition-property: box-shadow;
@@ -63,21 +56,24 @@ button {
   font-family: Ubuntu;
 }
 button.danger {
-  color: var(--accent_red);
+  color: var(--accent3);
 }
 button:hover.danger,
 button:focus.danger {
-  box-shadow: 0px 0px 10px 1px var(--accent_red) !important;
+  box-shadow: 0px 0px 10px 1px var(--accent3) !important;
 }
-input[type="text"]:hover,
-input[type="number"]:hover, 
-input[type="password"]:hover,
+input:hover,
 button:hover,
-input[type="text"]:focus,
-input[type="number"]:focus, 
-input[type="password"]:focus,
-button:focus {
-  box-shadow: 0px 0px 10px 1px #aff;
+select:hover,
+input:focus,
+button:focus,
+select:focus {
+  box-shadow: 0px 0px 10px 1px var(--shadow_btn);
+}
+
+select {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 #main {
@@ -87,7 +83,7 @@ button:focus {
 }
 
 .panel {
-  background: #333;
+  background: var(--bg_light);
   flex-grow: 1;
   margin: 10px;
   padding: 10px;
@@ -102,7 +98,7 @@ button:focus {
 }
 
 .left_panel_section {
-  background: #17171a;
+  background: var(--bg);
   flex-grow: 1;
   margin: 10px;
   padding: 10px;
@@ -115,11 +111,11 @@ button:focus {
 }
 
 #username {
-  color: var(--accent)
+  color: var(--accent1);
 }
 
 .session, .alert {
-  background: #333;
+  background: var(--bg_light);
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
@@ -139,20 +135,20 @@ button:focus {
 table {
   text-align: center;
   width: 100%;
-  border: 1px solid white;
+  border: 1px solid var(--border);
 }
 
 tr {
-  background: #444;
+  background: var(--table_light);
 }
 
 tr:nth-of-type(2n) {
-  background: #333;
+  background: var(--table_dark);
 }
 
 tr.header {
-  background: #ddd;
-  color: #111;
+  background: var(--table_head_bg);
+  color: var(--table_head_text);
 }
 
 th, td {
@@ -166,7 +162,7 @@ th, td {
   right: 0px;
   bottom: 0px;
   width: 40%;
-  background-color: #fff0;
+  opacity: 0;
   height: 50%;
   z-index: 999;
 }
@@ -174,7 +170,16 @@ th, td {
 .alert {
   padding: 20px;
   border: 5px solid white;
-  background: #17171a;
+  background: var(--bg);
+  transition: border-color 0.2s, opacity 0.5s;
+}
+
+.alert:hover {
+  border-color: var(--accent3);
+}
+
+.alert_fade {
+  opacity: 0;
 }
 
 @media (max-aspect-ratio: 1/1) {

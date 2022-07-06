@@ -1,0 +1,17 @@
+* {
+    /* forest theme */
+    --accent1: hsl(152, 94%, 49%);
+    --accent2: hsl(190, 94%, 49%);
+    --accent3: hsl(209, 100%, 49%);
+    --accent4: hsl(273, 80%, 63%);
+    --bg: hsl(127, 15%, 12%);
+    --bg_light: hsl(240, 2%, 18%);
+    --text: hsl(0, 0%, 100%);
+    --border: hsl(0, 0%, 100%);
+    --border_btn: hsl(240, 0%, 42%);
+    --shadow_btn: hsl(96, 100%, 83%);
+    --table_dark: hsl(140, 10%, 18%);
+    --table_light: hsl(140, 10%, 30%);
+    --table_head_bg: hsl(0, 0%, 100%);
+    --table_head_text: hsl(267, 94%, 7%);
+}

@@ -3,7 +3,7 @@
 # warning, this is a messy file
 
 from sanic import Sanic
-from sanic.response import html, file, json
+from sanic.response import html, file, json, text, redirect
 import helpers
 import json as non_sanic_json
 import time
@@ -74,6 +74,9 @@ async def newuser(request):
     f = open(PATH + 'users.txt', 'a')
     f.write('\n' + username + ',' + hash)
     f.close()
+    f = open(PATH + 'users/' + username + '.json', 'w')
+    f.write('{"theme":"dark"}')
+    f.close()
     return json({
         "success": "y",
         "msg": "account created successfully. username: " + username,
@@ -139,6 +142,11 @@ async def newsession(request):
             if not i in obj:
                 return json({
                     "msg": "one or more necesary keys not found in json",
+                })
+        for i in obj['name']:
+            if not i in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_ ,.!?-=':
+                return json({
+                    "msg": "invalid characters in session name",
                 })
         try:
             obj['taste'] = float(obj['taste'])
@@ -259,9 +267,9 @@ async def getsessions(request):
         "msg": result
     })
 
-@app.post('/getsession/<sessname:str>')
-async def getsession(request, sessname):
-    sessname = sessname.replace('%20', ' ')
+@app.post('/getsession')
+async def getsession(request):
+    sessname = request.form.get('sessname')
     if not request.cookies.get('gpw') == GLOBAL_PASSWORD:
         return json({
             "msg": "i",
@@ -354,9 +362,9 @@ async def judge(request):
         "msg": "y",
     })
 
-@app.post('/getsessiondata/<sessname:str>')
-async def getsessiondata(request, sessname):
-    sessname = sessname.replace('%20', ' ')
+@app.post('/getsessiondata')
+async def getsessiondata(request):
+    sessname = request.form.get('sessname')
     if not request.cookies.get('gpw') == GLOBAL_PASSWORD:
         return json({
             "msg": "i"
@@ -408,10 +416,24 @@ async def delsession(request):
     f = open(PATH + 'sessions.txt', 'w')
     f.write('\n'.join(contents))
     f.close()
+    os.remove(PATH + 'sessions/' + sessname + '.txt')
     return json({
         "msg": "y"
     })
 
+@app.post('/settings')
+async def settings(request):
+    theme = request.form.get('theme')
+    username = request.cookies.get('username')
+    pw = request.cookies.get('pw')
+    if not helpers.checkpw(username, pw):
+        return redirect('/')
+    f = open(PATH + 'users/' + username + '.json', 'w')
+    f.write(non_sanic_json.dumps({
+        "theme": theme,
+    }))
+    f.close()
+    return redirect('/')
 
 @app.get('/client/<filename:str>')
 async def clientFile(request, filename):
@@ -421,8 +443,26 @@ async def clientFile(request, filename):
 async def clientFont(request, filename):
     return await file(PATH + 'client/font/' + filename)
 
+@app.get('/style')
+async def clientStyle(request):
+    username = request.cookies.get('username')
+    if username is None:
+        username = ''
+    usersettings = non_sanic_json.loads(
+        open(
+            PATH + 'users/' + username + '.json', 'r'
+        ).read()
+    )
+    theme = usersettings['theme']
+    try:
+        style = open(PATH + 'client/theme/' + theme + '.css').read()
+    except:
+        style = open(PATH + 'client/theme/dark.css').read()
+    style += open(PATH + 'client/index.css').read()
+    return text(style)
+
 app.run(
-    host = '0.0.0.0',
+    host = '192.168.1.223',
     port = '8444',
     debug = False
 )

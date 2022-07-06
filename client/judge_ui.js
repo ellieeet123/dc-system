@@ -50,7 +50,7 @@ function disp(sessiondata, num) {
     a('judge_input_container').innerHTML = `
     <p>session: ${sessiondata.name}</p>
     <p>entry number: ${num}</p>
-    <p style="color:var(--accent)">${sessiondata.entries[num - 1][1]} made by ${sessiondata.entries[num - 1][0]}</p>
+    <p style="color:var(--accent1)">${sessiondata.entries[num - 1][1]} made by ${sessiondata.entries[num - 1][0]}</p>
     <span>taste (0-10):</span>
     <br>
     <input type="number" id="judge_taste" value="${judgedata[num - 1][0]}" onchange="validate(this)">
@@ -90,7 +90,9 @@ function judge(name) {
         }
     });
     let sessiondata;
-    request('/getsession/' + session.name).then(r => {
+    request('/getsession', {
+        sessname: session.name
+    }).then(r => {
         if (r.msg === 'y') {
             sessiondata = JSON.parse(r.data);
             console.log(sessiondata);
