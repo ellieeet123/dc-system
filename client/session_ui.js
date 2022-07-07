@@ -28,6 +28,7 @@ function sessionUI() {
     window.requestedSessionUserList = [];
     a('session_cancel').onclick = () => {
         a('cover_session').style.display = 'none';
+        a('main').style.display = 'flex';
     }
     a('session_create').onclick = () => {
         let entries = [];
@@ -60,6 +61,7 @@ function sessionUI() {
                 alert('Session created');
                 updateSessionList();
                 a('cover_session').style.display = 'none';
+                a('main').style.display = 'flex';
             } else if (result.msg === 'i') {
                 alert('global password invalid or expired');
             } else {
@@ -143,6 +145,10 @@ function updateSessionList() {
             window.sessions = [];
             console.log(e, result);
             a('session_list').innerHTML = '<p>something went wrong, try reloading</p>';
+        }
+        if (totalsessions === 0) {
+            a('session_list').innerHTML = '<p style="color: var(--accent2)">no sessions found</p>';
+            return;
         }
         let newsessions = [];
         window.sessiondata = {};

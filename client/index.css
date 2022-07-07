@@ -4,6 +4,7 @@ body {
   font-family: Ubuntu;
 }
 
+
 div.controls {
   display: flex;
   flex-direction: row;
@@ -12,9 +13,9 @@ div.controls {
 
 div.popup {
   width: 50%;
-  border: 1px solid white;
-  border-radius: 16px;
-  padding: 16px;
+  border: 0.2rem solid white;
+  border-radius: 1rem;
+  padding: 1rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -27,16 +28,16 @@ div.popup p {
   text-align: center;
 }
 div.spacer {
-  height: 1px;
+  height: 0.0625rem;
   background: var(--bg_light);
-  margin: 10px;
+  margin: 0.625rem;
 }
 .cover {
   position: fixed;
   width: 100%;
   height: 100%;
-  top: 0px;
-  left: 0px;
+  top: 0rem;
+  left: 0rem;
   background: var(--bg);
   z-index: 100;
   display: none;
@@ -44,23 +45,24 @@ div.spacer {
 input,
 button,
 select {
-  border: 4px solid var(--border_btn);
+  border: 0.25rem solid var(--border_btn);
   background-image: none;
   background-color: var(--bg_light);
-  border-radius: 25px;
+  border-radius: 20rem;
   color: var(--text);
-  padding: 10px;
-  margin: 5px;
+  padding: 0.625rem;
+  margin: 0.3125rem;
   transition-property: box-shadow;
   transition-duration: 0.2s;
   font-family: Ubuntu;
+  font-size: 0.9rem;
 }
 button.danger {
   color: var(--accent3);
 }
 button:hover.danger,
 button:focus.danger {
-  box-shadow: 0px 0px 10px 1px var(--accent3) !important;
+  box-shadow: 0rem 0rem 0.625rem 0.0625rem var(--accent3) !important;
 }
 input:hover,
 button:hover,
@@ -68,12 +70,12 @@ select:hover,
 input:focus,
 button:focus,
 select:focus {
-  box-shadow: 0px 0px 10px 1px var(--shadow_btn);
+  box-shadow: 0rem 0rem 0.625rem 0.0625rem var(--shadow_btn);
 }
 
 select {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
 }
 
 #main {
@@ -85,24 +87,31 @@ select {
 .panel {
   background: var(--bg_light);
   flex-grow: 1;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
+  margin: 0.625rem;
+  padding: 0.625rem;
+  border-radius: 0.625rem;
 }
 
-#left {
+#left, #right {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+#left {
   max-width: 40%;
+}
+
+#right {
+  max-width: 60%;
 }
 
 .left_panel_section {
   background: var(--bg);
   flex-grow: 1;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
+  margin: 0.625rem;
+  padding: 0.625rem;
+  border-radius: 0.625rem;
   text-align: center;
 }
 
@@ -116,26 +125,23 @@ select {
 
 .session, .alert {
   background: var(--bg_light);
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
+  margin: 0.625rem;
+  padding: 0.625rem;
+  border-radius: 0.625rem;
   display: flex;
   flex-direction: row;
 }
 
 .session>p {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#right {
-  max-width: 60%;
+  padding-left: 0.3125rem;
+  padding-right: 0.3125rem;
+  font-size: 1em;
 }
 
 table {
   text-align: center;
   width: 100%;
-  border: 1px solid var(--border);
+  border: 0.0625rem solid var(--border);
 }
 
 tr {
@@ -152,15 +158,15 @@ tr.header {
 }
 
 th, td {
-  padding: 5px;
+  padding: 0.3125rem;
 }
 
 #alert_container {
   display: flex;
   flex-direction: column-reverse;
   position: fixed;
-  right: 0px;
-  bottom: 0px;
+  right: 0rem;
+  bottom: 0rem;
   width: 40%;
   opacity: 0;
   height: 50%;
@@ -168,8 +174,8 @@ th, td {
 }
 
 .alert {
-  padding: 20px;
-  border: 5px solid white;
+  padding: 1.25rem;
+  border: 0.3125rem solid white;
   background: var(--bg);
   transition: border-color 0.2s, opacity 0.5s;
 }
@@ -197,5 +203,6 @@ th, td {
   }
   .popup {
     width: 85% !important;
+    max-height: 100% !important; 
   }
 }

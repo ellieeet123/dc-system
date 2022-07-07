@@ -245,6 +245,13 @@ async def getsessions(request):
             "msg": "i"
         })
     contents = open(PATH + 'sessions.txt', 'r').read().split('\n')
+    if contents == ['']:
+        return json({
+            "msg": non_sanic_json.dumps({
+                "total": 0,
+                "data": [],
+            })
+        })
     result = '{PLACEHOLD"data":['
     index = 0
     for i in reversed(contents):
@@ -338,7 +345,6 @@ async def judge(request):
     f.close()
     contents = contents.split('\n')
     contents[index] = data
-    print(contents)
     f = open(PATH + 'sessions/' + request.form.get('sessname') + '.txt', 'w')
     f.write('\n'.join(contents))
     f.close()
@@ -356,8 +362,6 @@ async def judge(request):
                 )
                 break
         index += 1
-
-    print(non_sanic_json.dumps(session))
     return json({
         "msg": "y",
     })
@@ -443,7 +447,7 @@ async def clientFile(request, filename):
 async def clientFont(request, filename):
     return await file(PATH + 'client/font/' + filename)
 
-@app.get('/style')
+@app.get('/theme.css')
 async def clientStyle(request):
     username = request.cookies.get('username')
     if username is None:
@@ -455,11 +459,14 @@ async def clientStyle(request):
     )
     theme = usersettings['theme']
     try:
-        style = open(PATH + 'client/theme/' + theme + '.css').read()
+        response = await file(PATH + 'client/theme/' + theme + '.css')
     except:
-        style = open(PATH + 'client/theme/dark.css').read()
-    style += open(PATH + 'client/index.css').read()
-    return text(style)
+        response = await file(PATH + 'client/theme/dark.css')
+    return response
+
+print()
+print(' === starting dcsys === ')
+print()
 
 app.run(
     host = '192.168.1.223',

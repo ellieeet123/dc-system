@@ -6,6 +6,7 @@ if (getCookie('gpw') !== '') {
     }).then(result => {
         if (result.msg === 'y') {
             a('cover_pw').style.display = 'none';
+            a('main').style.display = 'flex';
         }
     })
 }
@@ -16,6 +17,7 @@ a('pw_btn').onclick = () => {
         if (result.msg === 'y') {
             a('response').innerHTML = 'Correct';
             a('cover_pw').style.display = 'none';
+            a('main').style.display = 'flex';
             window.location.reload();
         } else {
             a('response').innerHTML = 'Incorrect';
@@ -26,9 +28,11 @@ a('pw_btn').onclick = () => {
 // create account
 a('create_account').onclick = () => {
     a('cover_newacc').style.display = 'block';
+    a('main').style.display = 'none';
 }
 a('newacc_cancel').onclick = () => {
     a('cover_newacc').style.display = 'none';
+    a('main').style.display = 'flex';
 }
 a('newacc_create').onclick = () => {
     a('newacc_response').innerHTML = 'please wait...';
@@ -44,6 +48,7 @@ a('newacc_create').onclick = () => {
                 a('newacc_response').innerHTML = '';
                 alert(result.msg);
                 a('cover_newacc').style.display = 'none';
+                a('main').style.display = 'flex';
             } else {
                 a('newacc_response').innerHTML = result.msg;
             }
@@ -56,9 +61,11 @@ a('newacc_create').onclick = () => {
 // sign in
 a('sign_in').onclick = () => {
     a('cover_signin').style.display = 'block';
+    a('main').style.display = 'none';
 }
 a('signin_cancel').onclick = () => {
     a('cover_signin').style.display = 'none';
+    a('main').style.display = 'flex';
 }
 a('signin_signin').onclick = () => {
     a('signin_response').innerHTML = 'please wait...';
@@ -118,6 +125,7 @@ a('session_new').onclick = () => {
         alert('please sign in');
     } else {
         a('cover_session').style.display = 'block';
+        a('main').style.display = 'none';
     }
 }
 sessionUI();

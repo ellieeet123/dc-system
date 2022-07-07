@@ -32,6 +32,7 @@ function submit() {
         if (r.msg === 'y') {
             alert('successfully saved scores');
             a('cover_judge').style.display = 'none';
+            a('main').style.display = 'flex';
             updateSessionList();
             return;
         } else {
@@ -130,6 +131,7 @@ function judge(name) {
             }
             disp(sessiondata, 1);
             a('cover_judge').style.display = 'block';
+            a('main').style.display = 'none';
         } else {
             alert('something went wrong, please try again.');
             return;

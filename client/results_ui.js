@@ -27,8 +27,10 @@ function weightCreativity(session, num) {
 function results(name, weighted) {
     window.resultsName = name;
     a('cover_results').style.display = 'block';
+    a('main').style.display = 'none';
     a('results_close').onclick = () => {
         a('cover_results').style.display = 'none';
+        a('main').style.display = 'flex';
     }
     request('/getsession', {
         sessname: name
