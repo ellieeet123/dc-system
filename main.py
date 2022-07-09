@@ -3,7 +3,7 @@
 # warning, this is a messy file
 
 from sanic import Sanic
-from sanic.response import html, file, json, text, redirect
+from sanic.response import html, file, json, redirect
 import helpers
 import json as non_sanic_json
 import time
@@ -469,7 +469,7 @@ print(' === starting dcsys === ')
 print()
 
 app.run(
-    host = '192.168.1.223',
+    host = 'localhost',
     port = '8444',
     debug = False
 )

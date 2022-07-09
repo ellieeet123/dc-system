@@ -36,7 +36,7 @@ a('newacc_cancel').onclick = () => {
 }
 a('newacc_create').onclick = () => {
     a('newacc_response').innerHTML = 'please wait...';
-    var username = a('newacc_username').value;
+    var username = a('newacc_username').value.toLowerCase();
     var pw1 = a('newacc_pw1').value;
     var pw2 = a('newacc_pw2').value;
     if (pw1 === pw2) {
@@ -69,7 +69,7 @@ a('signin_cancel').onclick = () => {
 }
 a('signin_signin').onclick = () => {
     a('signin_response').innerHTML = 'please wait...';
-    var username = a('signin_username').value;
+    var username = a('signin_username').value.toLowerCase();
     var pw = a('signin_pw').value;
     if (pw !== '' && username !== '') {
         request('/checkuserpw', {

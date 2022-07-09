@@ -224,6 +224,9 @@ function updateSessionList() {
                 // this shouldn't happen
                 break;
         }
+        if (status !== 'unauth') {
+            btn += `<button onclick="details('${session.name}')">details</button>`;
+        }
         if (session.createdby === getCookie('username')) {
             btn += `<button class="danger" onclick="delsession('${session.name}')">del</button>`
         }

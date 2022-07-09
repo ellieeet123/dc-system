@@ -4,7 +4,6 @@ body {
   font-family: Ubuntu;
 }
 
-
 div.controls {
   display: flex;
   flex-direction: row;
@@ -130,6 +129,7 @@ select {
   border-radius: 0.625rem;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .session>p {
@@ -171,6 +171,7 @@ th, td {
   opacity: 0;
   height: 50%;
   z-index: 999;
+  pointer-events: none;
 }
 
 .alert {
@@ -186,6 +187,10 @@ th, td {
 
 .alert_fade {
   opacity: 0;
+}
+
+span.c {
+  color: var(--accent2);
 }
 
 @media (max-aspect-ratio: 1/1) {
