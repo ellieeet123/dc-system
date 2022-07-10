@@ -469,7 +469,7 @@ print(' === starting dcsys === ')
 print()
 
 app.run(
-    host = 'localhost',
+    host = '192.168.1.223',
     port = '8444',
     debug = False
 )

@@ -76,34 +76,38 @@ function results(name, weighted) {
                         <td>${parseInt(i) + 1}</td>
                         <td>${entries[i].name}</td>
                         <td>${entries[i].entry}</td>
-                        <td>${entries[i].score}</td>
+                        <td>${entries[i].score.toPrecision(3).replace(/\.0+/g, '')}</td>
                     </tr>
                 `;
             }
             html += `</table>
-            <p>maximum scores</p>
-            <table>
-                <tr class="header">
-                    <th>taste</th>
-                    <th>presentation</th>
-                    <th>labor</th>
-                    <th>creativity</th>
-                    <th>total</th>
-                </tr>
-                <tr>
-                    <td>${!weighted ? session.taste      : 10}</td>
-                    <td>${!weighted ? session.present    : 10}</td>
-                    <td>${!weighted ? session.labor      : 10}</td>
-                    <td>${!weighted ? session.creativity : 10}</td>
-                    <td>${!weighted ? session.total      : 40}</td>
-                </tr>
-            </table>
+            <div id="max_scores_container">
+                <p>maximum scores</p>
+                <table>
+                    <tr class="header">
+                        <th>taste</th>
+                        <th>presentation</th>
+                        <th>labor</th>
+                        <th>creativity</th>
+                        <th>total</th>
+                    </tr>
+                    <tr>
+                        <td>${!weighted ? session.taste      : 10}</td>
+                        <td>${!weighted ? session.present    : 10}</td>
+                        <td>${!weighted ? session.labor      : 10}</td>
+                        <td>${!weighted ? session.creativity : 10}</td>
+                        <td>${!weighted ? session.total      : 40}</td>
+                    </tr>
+                </table>
+                <br>
+            </div>
             `;
             a('weighted_scores_label').onclick = () => {
                 a('results_showweighted').checked ^= 1; // toggle
                 results(window.resultsName, a('results_showweighted').checked);
             }
             let temphtml = ``;
+            console.log('data', data);
             for (let i in session.judges) {
                 temphtml += `
                 <p>score breakdown: 
@@ -129,25 +133,25 @@ function results(name, weighted) {
                             <td>${entries[j].entry}</td>
                             <td>${(()=>{
                                 if (weighted) {
-                                    return weightTaste(session, data[i][j][0]);
+                                    return weightTaste(session, data[i][j][0]).toPrecision(3).replace(/\.0+/g, '');
                                 }
                                 return data[i][j][0];
                             })()}</td>
                             <td>${(()=>{
                                 if (weighted) {
-                                    return weightPresent(session, data[i][j][1]);
+                                    return weightPresent(session, data[i][j][1]).toPrecision(3).replace(/\.0+/g, '');
                                 }
                                 return data[i][j][1];
                             })()}</td>
                             <td>${(()=>{
                                 if (weighted) {
-                                    return weightLabor(session, data[i][j][2]);
+                                    return weightLabor(session, data[i][j][2]).toPrecision(3).replace(/\.0+/g, '');
                                 }
                                 return data[i][j][2];
                             })()}</td>
                             <td>${(()=>{
                                 if (weighted) {
-                                    return weightCreativity(session, data[i][j][3]);
+                                    return weightCreativity(session, data[i][j][3]).toPrecision(3).replace(/\.0+/g, '');
                                 }
                                 return data[i][j][3];
                             })()}</td>
@@ -159,7 +163,7 @@ function results(name, weighted) {
                                             weightPresent(session, data[i][j][1]) + 
                                             weightLabor(session, data[i][j][2]) + 
                                             weightCreativity(session, data[i][j][3])
-                                        );
+                                        ).toPrecision(3).replace(/\.0+/g, '');
                                     }
                                     return sumOfList(data[i][j]);
                                 })()
@@ -170,6 +174,89 @@ function results(name, weighted) {
                 temphtml += `</table><br>`;
             }
             html += temphtml;
+            html += `
+            <p>score breakdown:
+                <span style="color: var(--accent1)">total</span>
+            </p>
+            <table>
+                <tr class="header">
+                    <th>name</th>
+                    <th>entry</th>
+                    <th>taste</th>
+                    <th>present.</th>
+                    <th>labor</th>
+                    <th>creat.</th>
+                    <th>total</th>
+                </tr>
+            `;
+            console.log(data);
+            for (let i in entries) {
+                html += `
+                <tr>
+                    <td>${entries[i].name}</td>
+                    <td>${entries[i].entry}</td>
+                    <td>${
+                        (()=>{
+                            let list = [];
+                            for (let j in data) {
+                                list.push(
+                                    weighted ? weightTaste(data[j][i][0]) : data[j][i][0]
+                                );
+                            }
+                            return sumOfList(list).toPrecision(3).replace(/\.0+/g, '');
+                        })()
+                    }</td>
+                    <td>${
+                        (()=>{
+                            let list = [];
+                            for (let j in data) {
+                                list.push(
+                                    weighted ? weightPresent(data[j][i][1]) : data[j][i][1]
+                                );
+                            }
+                            return sumOfList(list).toPrecision(3).replace(/\.0+/g, '');
+                        })()
+                    }</td>
+                    <td>${
+                        (()=>{
+                            let list = [];
+                            for (let j in data) {
+                                list.push(
+                                    weighted ? weightLabor(data[j][i][2]) : data[j][i][2]
+                                );
+                            }
+                            return sumOfList(list).toPrecision(3).replace(/\.0+/g, '');
+                        })()
+                    }</td>
+                    <td>${
+                        (()=>{
+                            let list = [];
+                            for (let j in data) {
+                                list.push(
+                                    weighted ? weightCreativity(data[j][i][3]) : data[j][i][3]
+                                );
+                            }
+                            return sumOfList(list).toPrecision(3).replace(/\.0+/g, '');
+                        })()
+                    }</td>
+                    <td>${
+                        (()=>{
+                            let list = [];
+                            for (let j in data) {
+                                list.push(
+                                    weighted ? (
+                                        weightTaste(data[j][i][0]) + 
+                                        weightPresent(data[j][i][1]) + 
+                                        weightLabor(data[j][i][2]) + 
+                                        weightCreativity(data[j][i][3]) 
+                                    ) : sumOfList(data[j][i])
+                                );
+                            }
+                            return sumOfList(list).toPrecision(3).replace(/\.0+/g, '');
+                        })()
+                    }</td>
+                    `;
+            }
             a('results_wrapper').innerHTML = html;
             a('results_title').innerHTML = `
                 results for session <span style="color: var(--accent1)">${session.name}</span>

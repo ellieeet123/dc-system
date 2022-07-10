@@ -76,16 +76,16 @@ function sessionUI() {
     a('session_requestuserbtn').onclick = () => {
         if (
             !(window.requestedSessionUserList.includes(
-                a('session_requestuser').value
+                a('session_requestuser').value.toLowerCase()
             ))
         ) {
             request('/checkusername', {
-                'name': a('session_requestuser').value,
+                'name': a('session_requestuser').value.toLowerCase(),
             }).then(result => {
                 if (result.msg === 'y') {
                     a('session_adduserresponse').innerHTML = '';
                     window.requestedSessionUserList.push(
-                            a('session_requestuser').value
+                            a('session_requestuser').value.toLowerCase()
                         );
                         a('session_requestuser').value = '';
                         updateSessionRequestedUsersList();
