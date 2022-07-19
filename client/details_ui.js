@@ -60,32 +60,30 @@ function details(name) {
                 <th>haven't judged</th>
                 <th>have judged</th>
             </tr>`;
+        let judges = [];
+        let judged = [];
         for (let i in session.judges) {
             if (
                 session.judged.includes(
                     session.judges[i]
                 )
             ) {
-                session.judges.splice(i, 1);
+                judged.push(session.judges[i]);
+            } else {
+                judges.push(session.judges[i]);
             }
         }
         for (let i = 0; true; i++) {
             if (
-                session.judges[i] === undefined &&
-                session.judged[i] === undefined
+                judges[i] === undefined &&
+                judged[i] === undefined
             ) {
                 break;
             }
-            if (session.judges[i] === undefined) {
-                session.judges[i] = '';
-            }
-            if (session.judged[i] === undefined) {
-                session.judged[i] = '';
-            }
             table += `
             <tr>
-                <td>${session.judges[i]}</td>
-                <td>${session.judged[i]}</td>
+                <td>${judges[i] ? judges[i] : ''}</td>
+                <td>${judged[i] ? judged[i] : ''}</td>
             </tr>
             `;
         }

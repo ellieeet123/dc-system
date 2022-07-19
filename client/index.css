@@ -28,6 +28,7 @@ div.popup {
   max-height: 97vh;
   overflow-y: auto;
   text-align: center;
+  vertical-align: middle;
 }
 div.popup p {
   text-align: center;
@@ -113,7 +114,6 @@ select {
 
 .left_panel_section {
   background: var(--bg);
-  flex-grow: 1;
   margin: 0.625rem;
   padding: 0.625rem;
   border-radius: 0.625rem;

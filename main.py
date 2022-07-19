@@ -2,6 +2,7 @@
 # dessert contest system backend
 # warning, this is a messy file
 
+from typing import Iterator
 from sanic import Sanic
 from sanic.response import html, file, json, redirect
 import helpers
@@ -244,17 +245,29 @@ async def getsessions(request):
         return json({
             "msg": "i"
         })
+    count = request.form.get('count')
+    if count > 20:
+        count = 20
+    startindex = request.form.get('startindex')
     contents = open(PATH + 'sessions.txt', 'r').read().split('\n')
     if contents == ['']:
         return json({
             "msg": non_sanic_json.dumps({
                 "total": 0,
                 "data": [],
-            })
+            }),
+        })
+    if startindex > len(contents) - 1:
+        return json({
+            "msg": non_sanic_json.dumps({
+                "total": str(len(contents) - 1),
+                "data": [],
+            }),
         })
     result = '{PLACEHOLD"data":['
     index = 0
-    for i in reversed(contents):
+    contents.reverse()
+    for i in contents:
         if index >= 10:
             break;
         if i != '':
@@ -469,7 +482,7 @@ print(' === starting dcsys === ')
 print()
 
 app.run(
-    host = '192.168.1.223',
+    host = 'localhost',
     port = '8444',
     debug = False
 )

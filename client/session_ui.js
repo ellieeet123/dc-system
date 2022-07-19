@@ -137,7 +137,10 @@ function delsession(name) {
 }
 
 function updateSessionList() {
-    request('/getsessions', {}).then(result => {
+    request('/getsessions', {
+        startindex: 0,
+        count: 10,
+    }).then(result => {
         try {
             window.sessions = JSON.parse(result.msg).data;
             window.totalsessions = JSON.parse(result.msg).total;
@@ -176,8 +179,7 @@ function updateSessionList() {
             }
             sessiondata[session.name] = data;
             let status = '';
-            let index = session.judges.indexOf(getCookie('username'));
-            if (index === -1) {
+            if (!session.judges.includes(getCookie('username'))) {
                 status = "unauth"
             }
             else if (session.judged.indexOf(getCookie('username')) === -1) {

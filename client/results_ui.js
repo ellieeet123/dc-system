@@ -107,7 +107,6 @@ function results(name, weighted) {
                 results(window.resultsName, a('results_showweighted').checked);
             }
             let temphtml = ``;
-            console.log('data', data);
             for (let i in session.judges) {
                 temphtml += `
                 <p>score breakdown: 
@@ -182,14 +181,23 @@ function results(name, weighted) {
                 <tr class="header">
                     <th>name</th>
                     <th>entry</th>
-                    <th>taste</th>
-                    <th>present.</th>
-                    <th>labor</th>
-                    <th>creat.</th>
-                    <th>total</th>
+                    <th>taste/${
+                        (weighted ? 10 : session.taste) * session.judges.length
+                    }</th>
+                    <th>present./${
+                        (weighted ? 10 : session.present) * session.judges.length
+                    }</th>
+                    <th>labor/${
+                        (weighted ? 10 : session.labor) * session.judges.length
+                    }</th>
+                    <th>creat./${
+                        (weighted ? 10 : session.creativity) * session.judges.length
+                    }</th>
+                    <th>total/${
+                        (weighted ? 40 : session.total) * session.judges.length
+                    }</th>
                 </tr>
             `;
-            console.log(data);
             for (let i in entries) {
                 html += `
                 <tr>
@@ -200,7 +208,7 @@ function results(name, weighted) {
                             let list = [];
                             for (let j in data) {
                                 list.push(
-                                    weighted ? weightTaste(data[j][i][0]) : data[j][i][0]
+                                    weighted ? weightTaste(session, data[j][i][0]) : data[j][i][0]
                                 );
                             }
                             return sumOfList(list).toPrecision(3).replace(/\.0+/g, '');
@@ -211,7 +219,7 @@ function results(name, weighted) {
                             let list = [];
                             for (let j in data) {
                                 list.push(
-                                    weighted ? weightPresent(data[j][i][1]) : data[j][i][1]
+                                    weighted ? weightPresent(session, data[j][i][1]) : data[j][i][1]
                                 );
                             }
                             return sumOfList(list).toPrecision(3).replace(/\.0+/g, '');
@@ -222,7 +230,7 @@ function results(name, weighted) {
                             let list = [];
                             for (let j in data) {
                                 list.push(
-                                    weighted ? weightLabor(data[j][i][2]) : data[j][i][2]
+                                    weighted ? weightLabor(session, data[j][i][2]) : data[j][i][2]
                                 );
                             }
                             return sumOfList(list).toPrecision(3).replace(/\.0+/g, '');
@@ -233,7 +241,7 @@ function results(name, weighted) {
                             let list = [];
                             for (let j in data) {
                                 list.push(
-                                    weighted ? weightCreativity(data[j][i][3]) : data[j][i][3]
+                                    weighted ? weightCreativity(session, data[j][i][3]) : data[j][i][3]
                                 );
                             }
                             return sumOfList(list).toPrecision(3).replace(/\.0+/g, '');
@@ -245,17 +253,18 @@ function results(name, weighted) {
                             for (let j in data) {
                                 list.push(
                                     weighted ? (
-                                        weightTaste(data[j][i][0]) + 
-                                        weightPresent(data[j][i][1]) + 
-                                        weightLabor(data[j][i][2]) + 
-                                        weightCreativity(data[j][i][3]) 
+                                        weightTaste(session, data[j][i][0]) + 
+                                        weightPresent(session, data[j][i][1]) + 
+                                        weightLabor(session, data[j][i][2]) + 
+                                        weightCreativity(session, data[j][i][3]) 
                                     ) : sumOfList(data[j][i])
                                 );
                             }
+                            console.log(list);
                             return sumOfList(list).toPrecision(3).replace(/\.0+/g, '');
                         })()
                     }</td>
-                    `;
+                </tr>`;
             }
             a('results_wrapper').innerHTML = html;
             a('results_title').innerHTML = `
