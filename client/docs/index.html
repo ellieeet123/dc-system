@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+    <head>
+        <title>dcsys docs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="client/font.css">
+        <link rel="stylesheet" href="theme.css">
+        <link rel="stylesheet" href="client/docs.css">
+    </head>
+    <body>
+        <div id="navbar_container">
+            <div id="navbar">
+                <a href="/">Home</a>
+                <br>
+                <a href="#1">The Basics</a>
+                <br>
+                <a href="#2">Account Creation</a>
+                <br>
+                <a href="#3">Signing In</a>
+                <br>
+                <a href="#4">Creating a Session</a>
+                <br>
+                <a href="#5">Session List</a>
+                <br>
+                <a href="#6">Judging</a>
+                <br>
+                <a href="#7">Other Session Actions</a>
+                <br>
+                <a href="#8">Results</a>
+                <br>
+                <a href="#9">Other Things</a>
+            </div>
+        </div>
+        <div id="content">
+            <h1>DCSYS v2.1 docs</h1>
+            <br>
+            <h2 id="1">The Basics</h2>
+            <p>The Dessert Contest System (dcsys) is a web application designed specifically for judging the Coleman Family dessert contests. To start using it, create an account. You can then use this account to create sessions. A session contains all of the information needed to judge a contest. Then, each session can be judged by all of the judges requested to judge on it, and once everyone has judged, the top scores, along with other interesting data, is displayed.</p>
+            <h2 id="2">Account Creation</h2>
+            <p>To create an account, first make sure you are signed out. Then, click on the "New Account" button. This will open an interface with three text inputs. In the first, enter your desired username. Note that it cannot be changed later. It may contain letters, numbers, and underscores, and must be between 3 and 20 characters. In the second two, add your desired password. It should be the same in both inputs. Then, press <code>create</code> to finish, and sign in. All passwords are hashed server-side, which means if you lose your password, it is unrecoverable. So be sure to remember it.</p>
+            <h2 id="3">Signing In</h2>
+            <p>To sign in, press the sign in button while signed out. This will open an interface with two inputs. Enter your username in the frist, and your password in the second. Then press <code>sign in</code>.</p>
+            <h2 id="4">Creating a Session</h2>
+            <p>Sessions are used to organize different contests. Each one functions completely indepentant from all of the others. To create one, first make sure you are signed in. Then, press the <code>create new</code> button in the sessions panel on the left. Start by entering a name for your session under "session name". Next, add some judges. Do this by typing in the username of the judge you want to add in "requested judges", then press "add". If the username is valid, it will appear below. Note that all judges added will be able to see scores and judge this session, and all judges not added won't be able to access it. Also note that all judges will have to judge before results are availible. </p>
+            <p>Next, score weights. Score weights dictate how important each of the four judging criteria (taste, presentation, labor, and creativity) for dertermening the final score rankings for each entry. For example, is taste is weighted as 20, and presentation is weighted as 10, taste will have twice as big of an impact on the final score as presentation does. You can set weights to whatever you want (except 0 or negative) by simply typing in numbers under the respective inputs.</p>
+            <p>Finally, add your entries. Start by entering the total number of entries in your contest under "number of entries". Then, that many inputs will appear below it. Each one will say "entry number x", and then "name" and "entry" below it. For each entry in your contest, enter its contestant name, and entry, in their respective inputs. Then, press "create" at the bottom. If it went correctly, you should see it on the right hand side. If not, you will see an error message in the bottom right.</p>
+            <h2 id="5">Session List</h2>
+            <p>On the right side you will see a list of sessions that have been made, in order from newest to oldest. Each one will say the session's name, it's status relative to you, and some actions you can take regarding it. Here is an example: <code>NAME | STATUS [action] [action]</code>. The status can be one of the following. </p>
+            <p>
+                <span style="color: var(--accent1)">done</span> -
+                everyone has judged, results are available
+            </p>
+            <p>
+                <span style="color: var(--accent4)">waiting</span> -
+                you have judged, but not everyone has judged yet
+            </p>
+            <p>
+                <span style="color: var(--accent2)">open</span> -
+                you have been requested to judge, but you haven't yet
+            </p>
+            <p>
+                <span style="color: var(--accent3)">unauth</span> -
+                you aren't allowed to judge this session
+            </p>
+            <p>If more than 10 sessions exist, you will see buttons to navigate between pages of sessions at the bottom.</p>
+            <h2 id="6">Judging</h2>
+            <p>To judge a session, first sign in, and then find or create a session with your username as one of the requested judges. Then, find that session in the list, and if the status is "open", click the "judge" button. It will tell you the session name, entry number, contestant name, and entry name that you are judging for. After tasting the entry, enter your scores for taste, presentation, labor, and creativity. Then push the right arrow at the bottom to go to the next entry. You can also press the left arrow to navigate back and change scores. On the last entry, a finish button will appear. Press this to finish judging and submit your scores to the server. Note that you cannot change your scores after pressing this button.</p>
+            <h2 id="7">Other Session Actions</h2>
+            <p>As long as your status for a session is not "unauth", you can click "details", which will show detailed about the session, including who has judged and who has not. You can also press "del" if you were the one who created the session to delete it (note that this is not undoable). Finally (and most importantly) if the status is "done", you can click "results" to see all of the final data about the session, including who won, and detailed score breakdowns for each judge and entry.</p>
+            <h2 id="8">Results</h2>
+            <p>The results screen contains lots of information about the final session scores. The first table is the most important, it lists all of the entries, who made them, and what place they got (in order). It also shows their total score. Below that, shows a table with the maximum scores that each entry can have for a specific judging criteria. Below that, there are tables showing exactly what scores each judge gave each entry. And finally, there is a table that shows the total score of each entry, broken down by into each of the 4 judging criteria. Note that at the top, the checkbox marked "show raw scores", will change all tables to show the individial scores out of 10 points. (that is the exact scores judges enter when judging). When it is not checked, scores are shown after weighting them based on the values entered when the session was created.</p>
+            <h2 id="9">Other Things</h2>
+            <p><li>Press "sign out" under your username when signed in to sign out.</li></p>
+            <p><li>Under "settings" on the left panel, use the "theme" dropdown to select a color theme, and press "save" to apply it. Note that this only works while signed in, and prefrences are saved to your account.</li></p>
+            <p><li>Yes, this whole thing is <s>slightly</s> definently overdone. But it was fun to make lmao </li></p>
+            <br>
+            <h2>Thanks for reading! <a href="/">Return home?</a></h2>
+    </body>
+</html>

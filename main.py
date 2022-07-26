@@ -2,9 +2,8 @@
 # dessert contest system backend
 # warning, this is a messy file
 
-from typing import Iterator
 from sanic import Sanic
-from sanic.response import html, file, json, redirect
+from sanic.response import html, file, json, redirect, text
 import helpers
 import json as non_sanic_json
 import time
@@ -44,7 +43,7 @@ async def newuser(request):
     username = request.form.get('name')
     pw       = request.form.get('pass')
     hash     = helpers.sha256(pw)
-    chars    = list('abcdefghijklmnopqrstuvwxyz1234567890_')
+    chars    = list('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_')
     f = open(PATH + 'users.txt')
     contents = f.read()
     f.close()
@@ -481,6 +480,12 @@ async def clientStyle(request):
     except:
         response = await file(PATH + 'client/theme/dark.css')
     return response
+
+@app.get('/docs')
+async def docs(request):
+    return html(
+        open(PATH + 'client/docs/index.html', 'r').read()
+    )
 
 print()
 print(' === starting dcsys === ')

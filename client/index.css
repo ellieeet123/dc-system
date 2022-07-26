@@ -9,20 +9,7 @@ div.controls {
   flex-direction: row;
   justify-content: center;
 } 
-/*
-div.popup {
-  width: 50%;
-  border: 0.2rem solid white;
-  border-radius: 1rem;
-  padding: 1rem;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-height: 80%;
-  overflow-y: auto;
-  text-align: center;
-} */
+
 #results, div.popup {
   padding: 1rem;
   max-height: 97vh;
@@ -82,6 +69,10 @@ select:focus {
 select {
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
+}
+
+a {
+  color: var(--accent2);
 }
 
 #main {
@@ -174,7 +165,7 @@ th, td {
   right: 0rem;
   bottom: 0rem;
   width: 40%;
-  opacity: 0;
+  opacity: 1;
   height: 50%;
   z-index: 999;
   pointer-events: none;
@@ -185,6 +176,7 @@ th, td {
   border: 0.3125rem solid white;
   background: var(--bg);
   transition: border-color 0.2s, opacity 0.5s;
+  opacity: 1;
 }
 
 .alert:hover {
@@ -202,6 +194,7 @@ span.c {
 #max_scores_container {
   position: sticky;
   top: 0rem;
+  margin-top: 0rem;
   background: var(--bg);
   padding: 0.625rem;
 }

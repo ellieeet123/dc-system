@@ -78,7 +78,7 @@
                     <div id="session_addedusers">
                     </div>
                     <br>
-                    <span>points: </span>
+                    <span>weights: </span>
                     <br>
                     <span>taste: </span>
                     <br>
@@ -115,6 +115,8 @@
                 <div id="judge_input_container"></div>
                 <button id="judge_left"> < </button>
                 <button id="judge_right"> > </button>
+                <br>
+                <button id="judge_cancel">cancel</button>
             </div>
         </div>
         <div class="cover" id="cover_results">
@@ -125,12 +127,11 @@
                         type="checkbox" 
                         id="results_showweighted" 
                         onclick="results(window.resultsName, this.checked)">
-                    <span id="weighted_scores_label">show weighted scores</span>
+                    <span id="weighted_scores_label">show raw scores</span>
                 </p>
                 <div id="results_wrapper">
                 </div>
                 <br>
-                <p>more detailed data coming soon</p>
                 <button id="results_close">close</button>
             </div>
         </div>
@@ -169,25 +170,29 @@
                 <div class="left_panel_section">
                     <p>settings</p>
                     <div class="spacer"></div>
-                    <form action="/settings" method="POST">
-                        <span>color theme</span>
-                        <br>
-                        <select name="theme">
-                            <option value="dark"> dark </option>
-                            <option value="light"> light </option>
-                            <option value="midnight"> midnight </option>
-                            <option value="forest"> forest </option>
-                            <option value="slate"> slate </option>
-                        </select>
-                        <div class="spacer"></div>
-                        <input value="save" type="submit">
-                    </form>
+                    <div id="settings_wrapper">
+                        <form action="/settings" method="POST">
+                            <span>color theme</span>
+                            <br>
+                            <select name="theme">
+                                <option value="dark"> dark </option>
+                                <option value="light"> light </option>
+                                <option value="midnight"> midnight </option>
+                                <option value="forest"> forest </option>
+                                <option value="slate"> slate </option>
+                            </select>
+                            <div class="spacer"></div>
+                            <input value="save" type="submit">
+                        </form>
+                    </div>
                 </div>
                 <div class="left_panel_section">
                     <p>info</p>
                     <div class="spacer"></div>
                     <p>version: v2.1</p>
-                    <p>author: elliot lydon</p>
+                    <p>author: <a href="mailto:elliotclydon@gmail.com" target="_blank">elliot lydon</a></p>
+                    <div class="spacer"></div>
+                    <a href="/docs" target="_blank">read the docs</a>
                     <div class="spacer"></div>
                     <p>session status codes:</p>
                     <p>

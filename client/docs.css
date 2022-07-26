@@ -1,0 +1,47 @@
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: Ubuntu;
+    display: flex;
+    flex-direction: row;
+}
+
+div#navbar_container {
+    width: 20rem;
+    position: sticky;
+}
+
+div#navbar {
+    border: .25rem solid var(--border);
+    border-radius: .5rem;
+    padding: 1rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;    position: sticky;
+
+}
+
+div#content {
+    max-width: 70%;
+}
+
+div {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+a {
+    color: var(--accent2);
+}
+
+code {
+    background: var(--bg_light);
+    padding: .3rem;
+    border-radius: .99rem;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    div#navbar_container {
+        display: none;
+    }
+}

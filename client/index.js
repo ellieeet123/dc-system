@@ -49,6 +49,9 @@ a('newacc_create').onclick = () => {
                 alert(result.msg);
                 a('cover_newacc').style.display = 'none';
                 a('main').style.display = 'flex';
+                setCookie('username', username, 9999);
+                setCookie('pw', pw1, 9999);
+                window.location.reload();
             } else {
                 a('newacc_response').innerHTML = result.msg;
             }
@@ -115,6 +118,7 @@ request('/checkuserpw', {
 if (getCookie('username') === '') {
     // hasn't signed in
     a('account_signedin').style.display = 'none';
+    a('settings_wrapper').innerHTML = 'please sign in to change settings<br>';
 } else {
     a('account_notsignedin').style.display = 'none';
     a('username').innerHTML = getCookie('username');

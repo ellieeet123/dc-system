@@ -129,6 +129,14 @@ function judge(name) {
                     disp(window.sessiondata, current_judge_entry);
                 }
             }
+            a('judge_cancel').onclick = () => {
+                if (confirm(
+                    'are you sure? all progress will be lost.'
+                )) {
+                    a('cover_judge').style.display = 'none';
+                    a('main').style.display = 'flex';
+                }
+            }
             disp(sessiondata, 1);
             a('cover_judge').style.display = 'block';
             a('main').style.display = 'none';
