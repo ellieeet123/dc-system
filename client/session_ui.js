@@ -59,7 +59,7 @@ function sessionUI() {
         }).then(result => {
             if (result.msg === 'y') {
                 alert('Session created');
-                updateSessionList();
+                updateSessionList(0);
                 a('cover_session').style.display = 'none';
                 a('main').style.display = 'flex';
             } else if (result.msg === 'i') {
@@ -131,14 +131,14 @@ function delsession(name) {
             } else {
                 alert(`error deleting session [${name}], unknown reason`);
             }
-            updateSessionList();
+            updateSessionList(0);
         })
     }
 }
 
-function updateSessionList() {
+function updateSessionList(index) {
     request('/getsessions', {
-        startindex: 0,
+        startindex: index,
         count: 10,
     }).then(result => {
         try {
@@ -194,51 +194,62 @@ function updateSessionList() {
                 status = "done";
             }
             a('session_list').innerHTML += `
-    <div class="session">
-    <p style="color: var(--accent1)">${session.name}</p>
-    <p> | </p>
-    <p style="color: var(${(() => {
-        /*
-        status codes:
-            unauth = not authorized to judge this session
-            open = waiting for user to judge this session
-            waiting = user has judged this session, but waiting for others to do the same
-            done = all users have judged this session
-        */
-        let color = '';
-        let btn = '';
-        switch (status) {
-            case "unauth":
-                color = '--accent3';
-                break;
-            case "open":
-                color = '--accent2';
-                btn = `<button onclick="(()=>{judge('${session.name}')})()">judge</button>`;
-                break;
-            case "waiting":
-                color = '--accent4';
-                break;
-            case "done":
-                color = '--accent1';
-                btn = `<button onclick="(()=>{results('${session.name}', false)})()">results</button>`;
-                break;
-            default:
-                // this shouldn't happen
-                break;
+                <div class="session">
+                <p style="color: var(--accent1)">${session.name}</p>
+                <p> | </p>
+                <p style="color: var(${(() => {
+                    /*
+                    status codes:
+                        unauth = not authorized to judge this session
+                        open = waiting for user to judge this session
+                        waiting = user has judged this session, but waiting for others to do the same
+                        done = all users have judged this session
+                    */
+                    let color = '';
+                    let btn = '';
+                    switch (status) {
+                        case "unauth":
+                            color = '--accent3';
+                            break;
+                        case "open":
+                            color = '--accent2';
+                            btn = `<button onclick="(()=>{judge('${session.name}')})()">judge</button>`;
+                            break;
+                        case "waiting":
+                            color = '--accent4';
+                            break;
+                        case "done":
+                            color = '--accent1';
+                            btn = `<button onclick="(()=>{results('${session.name}', false)})()">results</button>`;
+                            break;
+                        default:
+                            // this shouldn't happen
+                            break;
+                    }
+                    if (status !== 'unauth') {
+                        btn += `<button onclick="details('${session.name}')">details</button>`;
+                    }
+                    if (session.createdby === getCookie('username')) {
+                        btn += `<button class="danger" onclick="delsession('${session.name}')">del</button>`
+                    }
+                    return color + ')">' + status + '</p>' + btn;
+                })()}
+            </div>`;
         }
-        if (status !== 'unauth') {
-            btn += `<button onclick="details('${session.name}')">details</button>`;
+        if (index !== 0) {
+            a('session_list').innerHTML += `
+            <button onclick="updateSessionList(${(()=>{
+                return index - 11 < 0 ? 0 : index - 11;
+            })()})"> < </button>`;
         }
-        if (session.createdby === getCookie('username')) {
-            btn += `<button class="danger" onclick="delsession('${session.name}')">del</button>`
-        }
-        return color + ')">' + status + '</p>' + btn;
-    })()}
-    </div>
-        `;
-        }
-        if (window.totalsessions > 10) {
-            a('session_list').innerHTML += 'note: some sessions are not shown due to there being too many.';
+        if (sessions.length === 10) {
+            a('session_list').innerHTML += `<button onclick="updateSessionList(${(()=>{
+                if (sessions.length === 10) {
+                    return index + 11 > sessions.length ? sessions.length : index + 11;
+                } else {
+                    return ''
+                }
+            })()})"> > </button>`;
         }
     });
 }

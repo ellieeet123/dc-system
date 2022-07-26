@@ -129,4 +129,4 @@ a('session_new').onclick = () => {
     }
 }
 sessionUI();
-updateSessionList();
+updateSessionList(0);

@@ -33,7 +33,7 @@ function submit() {
             alert('successfully saved scores');
             a('cover_judge').style.display = 'none';
             a('main').style.display = 'flex';
-            updateSessionList();
+            updateSessionList(0);
             return;
         } else {
             alert('something went wrong. server message: ' + r.msg);

@@ -245,10 +245,10 @@ async def getsessions(request):
         return json({
             "msg": "i"
         })
-    count = request.form.get('count')
+    count = int(request.form.get('count'))
     if count > 20:
         count = 20
-    startindex = request.form.get('startindex')
+    startindex = int(request.form.get('startindex'))
     contents = open(PATH + 'sessions.txt', 'r').read().split('\n')
     if contents == ['']:
         return json({
@@ -257,25 +257,30 @@ async def getsessions(request):
                 "data": [],
             }),
         })
-    if startindex > len(contents) - 1:
+    if startindex > len(contents) - 1 or count == 0:
         return json({
             "msg": non_sanic_json.dumps({
                 "total": str(len(contents) - 1),
                 "data": [],
             }),
         })
+    if startindex < 0:
+        startindex = 0
     result = '{PLACEHOLD"data":['
-    index = 0
+    index = startindex
+    amount = 0
     contents.reverse()
-    for i in contents:
-        if index >= 10:
+    while True:
+        if amount >= count or index > len(contents) - 1:
             break;
+        i = contents[index]
         if i != '':
             result += i.split('>', 1)[1] + ',"' + (
                 open(PATH + 'sessions/' + i.split('>', 1)[0] + '.txt', 'r')
                 .read()
                 .replace('\n', '&')
             )  + '",'
+            amount += 1
         index += 1
     result = result[:-1] + ']}'
     result = result.replace(
