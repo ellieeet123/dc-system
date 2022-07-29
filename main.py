@@ -11,6 +11,8 @@ import os
 
 PATH = __file__[:__file__.rfind('/')+1]
 
+SERVER_CONFIG = non_sanic_json.loads(open(PATH + 'serverconfig.json').read())
+
 GLOBAL_PASSWORD = '123'
 
 app = Sanic('app')
@@ -49,7 +51,7 @@ async def newuser(request):
     f.close()
     user_list = contents.split('\n')
     for x in user_list:
-        if line != '':
+        if x != '':
             line = x.split(',')
             if line[0] == username:
                 return json({
@@ -470,16 +472,16 @@ async def clientStyle(request):
     username = request.cookies.get('username')
     if username is None:
         username = ''
-    usersettings = non_sanic_json.loads(
-        open(
-            PATH + 'users/' + username + '.json', 'r'
-        ).read()
-    )
-    theme = usersettings['theme']
     try:
+        usersettings = non_sanic_json.loads(
+            open(
+                PATH + 'users/' + username + '.json', 'r'
+            ).read()
+        )
+        theme = usersettings['theme']
         response = await file(PATH + 'client/theme/' + theme + '.css')
     except:
-        response = await file(PATH + 'client/theme/dark.css')
+        response = await file(PATH + 'client/theme/' + SERVER_CONFIG['default_settings']['theme'] + '.css')
     return response
 
 @app.get('/docs')
@@ -493,7 +495,7 @@ print(' === starting dcsys === ')
 print()
 
 app.run(
-    host = 'localhost',
-    port = '8444',
-    debug = False
+    host = SERVER_CONFIG['host'],
+    port = SERVER_CONFIG['port'],
+    debug = False,
 )
