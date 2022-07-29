@@ -13,7 +13,7 @@ PATH = __file__[:__file__.rfind('/')+1]
 
 SERVER_CONFIG = non_sanic_json.loads(open(PATH + 'serverconfig.json').read())
 
-GLOBAL_PASSWORD = '123'
+GLOBAL_PASSWORD = SERVER_CONFIG['global_password']
 
 app = Sanic('app')
 

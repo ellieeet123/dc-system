@@ -1,6 +1,7 @@
 {
     "host": "localhost",
     "port": "8080",
+    "global_password": "123",
     "default_settings": {
         "theme": "dark"
     }
