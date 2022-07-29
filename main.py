@@ -49,12 +49,13 @@ async def newuser(request):
     f.close()
     user_list = contents.split('\n')
     for x in user_list:
-        line = x.split(',')
-        if line[0] == username:
-            return json({
-                "success": "n",
-                "msg": "name already exists",
-            })
+        if line != '':
+            line = x.split(',')
+            if line[0] == username:
+                return json({
+                    "success": "n",
+                    "msg": "name already exists",
+                })
     for x in username:
         if not x in chars:
             return json({

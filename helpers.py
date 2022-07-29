@@ -13,9 +13,10 @@ def checkpw(username, pw):
   user_list = f.read().split('\n')
   f.close()
   for x in user_list:
-    line = x.split(',')
-    if line[0] == username and line[1] == hash:
-      return True
+    if x != '':
+      line = x.split(',')
+      if line[0] == username and line[1] == hash:
+        return True
   return False
 
 def checkusername(username):
@@ -23,8 +24,9 @@ def checkusername(username):
   contents = f.read()
   f.close()
   for i in contents.split('\n'):
-    if i.split(',')[0] == username:
-      return True
+    if i != '':
+      if i.split(',')[0] == username:
+        return True
   return False
 
 def get_session(name):
