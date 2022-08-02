@@ -199,6 +199,10 @@ span.c {
   padding: 0.625rem;
 }
 
+#raw_json {
+  overflow-wrap: break-word;
+}
+
 @media (max-aspect-ratio: 1/1) {
   #main {
     flex-direction: column;

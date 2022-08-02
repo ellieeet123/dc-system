@@ -1,0 +1,11 @@
+{
+    "host": "192.168.1.109",    // Hostname of the server (the IP clients will use to connect)
+    "port": "8080",             // Port of the server.
+    "global_password": "123",   // Global password that all users need to enter.
+    "default_settings": {       // Default settings for non-signed in users, and for new users.
+        "theme": "dark",        // Color theme
+        "show_unauth": true,    // Show unauthorized sessions
+        "show_raw": false,      // Show weighted scores in the results screen by default
+        "show_json": false      // Show raw JSON in details screen
+    }
+}

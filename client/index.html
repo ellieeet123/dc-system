@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="client/font.css">
         <link rel="stylesheet" href="theme.css">
         <link rel="stylesheet" href="client/index.css">
+        <script>//USERSETTINGS</script>
     </head>
     <body>
         <div class="cover" id="cover_pw">
@@ -125,8 +126,9 @@
                 <p>
                     <input 
                         type="checkbox" 
-                        id="results_showweighted" 
-                        onclick="results(window.resultsName, this.checked)">
+                        id="results_showraw" 
+                        onclick="results(window.resultsName, this.checked)"
+                        data-firstrender="true">
                     <span id="weighted_scores_label">show raw scores</span>
                 </p>
                 <div id="results_wrapper">
@@ -175,12 +177,21 @@
                             <span>color theme</span>
                             <br>
                             <select name="theme">
-                                <option value="dark"> dark </option>
-                                <option value="light"> light </option>
-                                <option value="midnight"> midnight </option>
-                                <option value="forest"> forest </option>
-                                <option value="slate"> slate </option>
+                                <option value="dark" SETTINGS_THEME_DARK> dark </option>
+                                <option value="light" SETTINGS_THEME_LIGHT> light </option>
+                                <option value="midnight" SETTINGS_THEME_MIDNIGHT> midnight </option>
+                                <option value="forest" SETTINGS_THEME_FOREST> forest </option>
+                                <option value="slate" SETTINGS_THEME_SLATE> slate </option>
                             </select>
+                            <div class="spacer"></div>
+                            <span>show unauthorized sessions </span>
+                            <input name="show_unauth" type="checkbox" SETTINGS_SHOW_UNAUTH>
+                            <div class="spacer"></div>
+                            <span>show raw scores by default </span>
+                            <input name="show_raw" type="checkbox" SETTINGS_SHOW_RAW>
+                            <div class="spacer"></div>
+                            <span>show raw JSON data in details menu </span>
+                            <input name="show_json" type="checkbox" SETTINGS_SHOW_JSON>
                             <div class="spacer"></div>
                             <input value="save" type="submit">
                         </form>

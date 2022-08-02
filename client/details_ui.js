@@ -11,7 +11,6 @@ function details(name) {
             return;
         }
         var session = JSON.parse(r.data);
-        console.log(session);
         a('details_title').innerHTML = `
         details for session
         <span style="color: var(--accent1)">${session.name}</span>
@@ -89,6 +88,14 @@ function details(name) {
         }
         table += '</table>';
         html += table;
+        if (settings.show_json) {
+            html += `<br>
+            <span>raw session JSON</span><br>
+            <div id="raw_json">
+                <code>${JSON.stringify(session)}</code>
+            </div>
+            `;
+        }
         a('details_wrapper').innerHTML = html;
         a('cover_details').style.display = 'block';
         a('main').style.display = 'none';

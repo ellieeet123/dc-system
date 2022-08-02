@@ -50,7 +50,6 @@ function sessionUI() {
             entries: entries,
             judged: [],
         });
-        console.log(str);
         request('/newsession', {
             session: str,
             session_name: a('session_name').value,
@@ -192,6 +191,9 @@ function updateSessionList(index) {
                 status = "waiting"
             } else {
                 status = "done";
+            }
+            if (status === 'unauth' && !settings.show_unauth) {
+                continue;
             }
             a('session_list').innerHTML += `
                 <div class="session">

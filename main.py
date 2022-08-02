@@ -8,10 +8,17 @@ import helpers
 import json as non_sanic_json
 import time
 import os
+import re
 
 PATH = __file__[:__file__.rfind('/')+1]
 
-SERVER_CONFIG = non_sanic_json.loads(open(PATH + 'serverconfig.json').read())
+SERVER_CONFIG = non_sanic_json.loads(
+    re.sub(
+        '\\/\\/.*',
+        '',
+        open(PATH + 'serverconfig.jsonc').read()
+    )
+)
 
 GLOBAL_PASSWORD = SERVER_CONFIG['global_password']
 
@@ -19,8 +26,54 @@ app = Sanic('app')
 
 @app.get('/')
 async def index(request):
+    username = request.cookies.get('username')
+    if username is None:
+        username = ''
+    try:
+        usersettings = open(PATH + 'users/' + username + '.json').read()
+    except:
+        usersettings = non_sanic_json.dumps(SERVER_CONFIG['default_settings'])
+    usersettings = non_sanic_json.loads(usersettings)
     return html(
-        open(PATH + 'client/index.html').read()
+        open(PATH + 'client/index.html')
+        .read()
+        # massive replace chain bc i don't want to get a templating engine into this
+        .replace(
+            '//USERSETTINGS', 
+            'var settings = ' + non_sanic_json.dumps(usersettings) + ';'
+        )
+        .replace(
+            'SETTINGS_THEME_DARK',
+            'selected' if usersettings['theme'] == 'dark' else ''
+        )
+        .replace(
+            'SETTINGS_THEME_LIGHT',
+            'selected' if usersettings['theme'] == 'light' else ''
+        )
+        .replace(
+            'SETTINGS_THEME_MIDNIGHT',
+            'selected' if usersettings['theme'] == 'midnight' else ''
+        )
+        .replace(
+            'SETTINGS_THEME_FOREST',
+            'selected' if usersettings['theme'] == 'forest' else ''
+        )
+        .replace(
+            'SETTINGS_THEME_SLATE',
+            'selected' if usersettings['theme'] == 'slate' else ''
+        )
+        .replace(
+            'SETTINGS_SHOW_UNAUTH',
+            'checked' if usersettings['show_unauth'] else ''
+        )
+        .replace(
+            'SETTINGS_SHOW_RAW',
+            'checked' if usersettings['show_raw'] else ''
+        )
+        .replace(
+            'SETTINGS_SHOW_JSON',
+            'checked' if usersettings['show_json'] else ''
+        )
     )
 
 @app.post('/checkpw')
@@ -78,7 +131,14 @@ async def newuser(request):
     f.write('\n' + username + ',' + hash)
     f.close()
     f = open(PATH + 'users/' + username + '.json', 'w')
-    f.write('{"theme":"dark"}')
+    f.write(
+        non_sanic_json.dumps({
+            "theme": SERVER_CONFIG['default_settings']['theme'],
+            "show_unauth": SERVER_CONFIG['default_settings']['show_unauth'],
+            "show_raw": SERVER_CONFIG['default_settings']['show_raw'],
+            "show_json": SERVER_CONFIG['default_settings']['show_json'],
+        })
+    )
     f.close()
     return json({
         "success": "y",
@@ -448,6 +508,7 @@ async def delsession(request):
 @app.post('/settings')
 async def settings(request):
     theme = request.form.get('theme')
+    print('                                  ' + str(request.form.get('show_unauth')))
     username = request.cookies.get('username')
     pw = request.cookies.get('pw')
     if not helpers.checkpw(username, pw):
@@ -455,6 +516,9 @@ async def settings(request):
     f = open(PATH + 'users/' + username + '.json', 'w')
     f.write(non_sanic_json.dumps({
         "theme": theme,
+        "show_unauth": False if request.form.get('show_unauth') is None else True,
+        "show_raw": False if request.form.get('show_raw') is None else True,
+        "show_json": False if request.form.get('show_json') is None else True,
     }))
     f.close()
     return redirect('/')

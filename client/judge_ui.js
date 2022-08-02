@@ -8,7 +8,6 @@ function submit() {
     if (!confirm("are you sure? you can't change your scores after this.")) {
         return;
     }
-    console.log(judgedata);
     let str = '';
     for (let i = 0; i < judgedata.length; i++) {
         for (let j = 0; j < judgedata[i].length; j++) {
@@ -23,12 +22,10 @@ function submit() {
         str += '|';
     }
     str = str.substring(0, str.length - 1);
-    console.log(str);
     request('/judge', {
         'data': str,
         'sessname': sessiondata.name,
     }).then(r => {
-        console.log(r);
         if (r.msg === 'y') {
             alert('successfully saved scores');
             a('cover_judge').style.display = 'none';
@@ -76,7 +73,6 @@ function disp(sessiondata, num) {
 
 function judge(name) {
     var session = window.sessionobject[name];
-    console.log(session.name);
     if (!session) {
         alert('session not found');
         return;
@@ -96,7 +92,6 @@ function judge(name) {
     }).then(r => {
         if (r.msg === 'y') {
             sessiondata = JSON.parse(r.data);
-            console.log(sessiondata);
             window.current_judge_entry = 1;
             window.entry_num = session.entries.length;
             window.sessiondata = sessiondata;
