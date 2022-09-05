@@ -42,6 +42,9 @@ function validate(elem) {
     if (elem.value > 10) {
         elem.value = 10;
     }
+    if (elem.value < 0) {
+        elem.value = 0;
+    }
 }
 
 function disp(sessiondata, num) {
